@@ -1,0 +1,26 @@
+---
+# see https://github.com/jesusvasquez333/verify-pr-label-action
+name: PR Labels
+
+on:
+  pull_request:
+    types: [ opened, labeled, unlabeled, synchronize ]
+
+jobs:
+  pr_labels:
+    if: ${{ github.event.pull_request.state != 'closed' }}
+    name: 🏭 Verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏷 Verify PR has a valid label
+        uses: jesusvasquez333/verify-pr-label-action@v1.4.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          valid-labels: >-
+            hotfix, bug, new-feature, 
+            documentation, ci, 
+            refactor, performance, security,
+            dependencies, gitflow
+          invalid-labels: >-
+            question, enhancement, maintenance
+          disable-reviews: true
