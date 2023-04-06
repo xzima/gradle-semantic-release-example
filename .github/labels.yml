@@ -1,0 +1,85 @@
+---
+- name: "new-feature"
+  color: 0e8a16
+  description: "Новая функциональность."
+- name: "bug"
+  color: ee0701
+  description: "Исправление проблем в продукте."
+- name: "hotfix"
+  color: ee0701
+  description: "Исправление проблем в production окружении."
+
+- name: "question"
+  color: 2af79e
+  description: "Вопрос о том, как пользоваться проектом."
+- name: "maintenance"
+  color: 2af79e
+  description: "Общие задачи для обслуживания проекта."
+- name: "enhancement"
+  color: 1d76db
+  description: "Предложения по улучшению алгоритмов, средств разработки и т.д."
+
+- name: "security"
+  color: ee0701
+  description: "Устранение уязвимости или угрозы безопасности в этом проекте."
+- name: "refactor"
+  color: 1d76db
+  description: "Обновление, упрощение или оптимизация кодовой базы, но без добавления новых функций."
+- name: "performance"
+  color: 1d76db
+  description: "Повышение производительности проекта, но без добавления новых функций."
+
+- name: "documentation"
+  color: 0052cc
+  description: "Исключительно о документации проекта."
+- name: "ci"
+  color: 1d76db
+  description: "Улучшение процессов непрерывной интеграции и автоматизации проекта."
+
+- name: "dependencies"
+  color: 1d76db
+  description: "Изменение зависимостей проекта."
+- name: "gitflow"
+  color: 1d76db
+  description: "Синхронизация основных веток проекта."
+
+- name: "in-progress"
+  color: fbca04
+  description: "В настоящее время решается разработчиком."
+- name: "stale"
+  color: fef2c0
+  description: "PR помеченный как неактивный в течение достаточно долгого времени."
+- name: "no-stale"
+  color: fef2c0
+  description: "PR исключенный из процесса отслеживания активности."
+
+- name: "incomplete"
+  color: fef2c0
+  description: "Недостаточно информации."
+- name: "invalid"
+  color: fef2c0
+  description: "off-topic, spam, или иным образом не относится к этому проекту."
+
+- name: "beginner-friendly"
+  color: 0e8a16
+  description: "Хороший первый выпуск для людей, желающих внести свой вклад в этот проект."
+- name: "help-wanted"
+  color: 0e8a16
+  description: "Нам нужны дополнительные руки помощи или опыт, чтобы решить эту проблему!"
+
+- name: "priority-critical"
+  color: ee0701
+  description: "Необходимо решить как можно скорее."
+- name: "priority-high"
+  color: b60205
+  description: "После того, как критические задачи исправлены, должны быть устранены, прежде чем возникнут дальнейшие проблемы."
+- name: "priority-medium"
+  color: 0e8a16
+  description: "Эта проблема может быть полезной и требует некоторого внимания."
+- name: "priority-low"
+  color: e4ea8a
+  description: "Хорошее предложение, может быть... когда-нибудь..."
+
+- name: "breaking-change"
+  color: ee0701
+  description: "Изменение, которое изменяет API или нарушает обратную совместимость для пользователей. Приводит к повышению мажорной версии проекта."
