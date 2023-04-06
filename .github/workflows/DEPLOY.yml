@@ -1,0 +1,22 @@
+---
+name: "CI"
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - develop
+      - master
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint Commit Messages
+        uses: wagoid/commitlint-github-action@v5.2.2
+        with:
+          configFile: configs/commitlint.config.js
+          helpURL: https://www.conventionalcommits.org
