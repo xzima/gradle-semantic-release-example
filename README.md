@@ -9,8 +9,8 @@
 - [x] `[amazing-github-template]` добавил синхронизацию labels и их проверку в pull requests
 - [ ] `[amazing-github-template]` создан репозиторий на github с лицензией и readme
 - [ ] добавить механизм обновления зависимостей через renovate
-- [ ] `[task management][amazing-github-template]` добавить шаблоны issues
-- [ ] `[task management]` добавить механизм создания pull requests на основе issues
+- [X] `[task management][amazing-github-template]` добавить шаблоны issues
+- [X] `[task management]` добавить механизм создания pull requests на основе issues
 - [ ] добавить автоматическое создание pull request для gitflow
 - [ ] `[semantic-release]` добавить механизм обновления версии в gradle.properties
 - [ ] `[semantic-release]` добавить генерацию CHANGELOG.md
@@ -35,6 +35,13 @@
 - npm i
 
 ## Applied practices
+
+### Issue automation
+
+Для организации автоматического создания веток на основе правил из issue используется [create-issue-branch].
+Порядок действия:
+- при задании assignee для issue автоматически создаётся ветка и pull request на основе правил из [issue-branch.yml](.github/issue-branch.yml)
+- ?? что будет при закрытии pr
 
 ### Github labels
 
@@ -75,3 +82,5 @@ CI [wagoid/commitlint-github-action].
 [jesusvasquez333/verify-pr-label-action]:https://github.com/jesusvasquez333/verify-pr-label-action
 
 [Conventional Commits]:https://www.conventionalcommits.org/en/v1.0.0/
+
+[create-issue-branch]:https://github.com/robvanderleek/create-issue-branch
