@@ -1,6 +1,6 @@
 ---
-name: Feature Request
-about: Предложите идею новой функциональности для этого проекта
+name: ✨ Feature Request
+about: Новая функциональность
 title: "feat: "
 labels: "new-feature"
 assignees: ""
