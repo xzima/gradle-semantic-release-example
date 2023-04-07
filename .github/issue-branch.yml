@@ -1,0 +1,34 @@
+# see https://github.com/robvanderleek/create-issue-branch#configuration=
+# mode: chatops
+
+branchName: tiny # example: i15
+openDraftPR: true
+prSkipCI: true
+#openPR: true
+copyIssueDescriptionToPR: true
+copyIssueLabelsToPR: true
+copyIssueAssigneeToPR: true
+# copyIssueProjectsToPR: true
+# copyIssueMilestoneToPR: true
+
+defaultBranch: develop
+branches:
+  - label: hotfix
+    name: master
+    prefix: hotfix/
+  - label: new-feature
+    name: develop
+    prefix: feature/
+  - label: bug
+    name: develop
+    prefix: bugs/
+
+  - label: documentation
+    name: master
+    prefix: docs/
+  - label: ci
+    name: master
+    prefix: ci/
+
+  - label: '*'
+    skip: true
