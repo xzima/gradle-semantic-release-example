@@ -2,10 +2,7 @@
 <h1>gradle-semantic-release-example</h1>
 <br />
 
-[![Project license](https://img.shields.io/github/license/xzima/gradle-semantic-release-example.svg?style=flat-square)](LICENSE)
-
-[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/xzima/gradle-semantic-release-example/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
-[![code with love by xzima](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-xzima-ff1414.svg?style=flat-square)](https://github.com/xzima)
+![GitHub](https://img.shields.io/github/license/xzima/gradle-semantic-release-example?style=for-the-badge)
 
 </div>
 <details open="open">
