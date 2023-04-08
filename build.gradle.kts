@@ -1,17 +1,29 @@
+@Suppress("DSL_SCOPE_VIOLATION")
+
 plugins {
-    kotlin("jvm") version "1.8.20"
-    application
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring)
 }
 
 group = "com.github.xzima"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation(libs.bundles.implementation)
+    developmentOnly(libs.bundles.development)
+    testImplementation(libs.bundles.test)
+}
+
+tasks.compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = libs.versions.jvm.get()
+    }
 }
 
 tasks.test {
@@ -19,9 +31,7 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(17)
-}
-
-application {
-    mainClass.set("MainKt")
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.jvm.get()))
+    }
 }
