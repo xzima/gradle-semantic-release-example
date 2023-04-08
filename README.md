@@ -1,3 +1,4 @@
+<!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 <h1>gradle-semantic-release-example</h1>
 <br />
@@ -57,11 +58,13 @@ TODO
 ### Issue automation
 
 Для организации автоматического создания веток на основе правил из issue используется [create-issue-branch].
-Порядок действия:
 
-- при задании assignee для issue автоматически создаётся ветка и pull request на основе правил
-  из [issue-branch.yml](.github/issue-branch.yml)
-- ?? что будет при закрытии pr
+При задании assignee для issue автоматически создаётся ветка и pull request на основе правил
+из [issue-branch.yml](.github/issue-branch.yml).
+
+При создании pull request в тело добавляет текст формата `closes #XX`, что приводит при закрытии pull request к
+автоматическому закрытию issue.
+Если данное поведение избыточно, то до закрытия pull request следует удалить данный фрагмент из его тела.
 
 ### Github labels
 
