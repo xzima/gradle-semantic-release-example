@@ -35,8 +35,10 @@ JVM Kotlin Gradle
 
 ### Prerequisites
 
-> **[?]**
-> What are the project requirements/dependencies?
+- [node.js/npm](https://nodejs.org/en/download)
+- [docker](https://docs.docker.com/engine/install)
+- [jvm](https://adoptium.net/temurin/releases)
+- [gradle](https://gradle.org/install/)
 
 ### Development
 
@@ -46,8 +48,9 @@ npm i # need for install git hooks
 
 ### Installation
 
-> **[?]**
-> Describe how to install and get started with the project.
+```shell
+TODO
+```
 
 ## Applied practices
 
