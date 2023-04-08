@@ -1,38 +1,56 @@
-# gradle-semantic-release-example
+<div align="center">
+<h1>gradle-semantic-release-example</h1>
+<br />
+
+![GitHub](https://img.shields.io/github/license/xzima/gradle-semantic-release-example?style=for-the-badge)
+
+</div>
+<details open="open">
+<summary>Table of Contents</summary>
+
+- [About](#about)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Development](#development)
+  - [Installation](#installation)
+- [Applied practices](#applied-practices)
+- [Security](#security)
+- [License](#license)
+- [External resources](#external-resources)
+
+</details>
+
+---
+
+## About
 
 > An example project that is automatically deployed
 
-## Что нужно сделать?
+### Built With
 
-- [x] создан проект gradle+kotlin
-- [x] добавил проверку commitLint для github actions и git hooks
-- [x] `[amazing-github-template]` добавил синхронизацию labels и их проверку в pull requests
-- [ ] `[amazing-github-template]` создан репозиторий на github с лицензией и readme
-- [ ] добавить механизм обновления зависимостей через renovate
-- [X] `[task management][amazing-github-template]` добавить шаблоны issues
-- [X] `[task management]` добавить механизм создания pull requests на основе issues
-- [ ] добавить автоматическое создание pull request для gitflow
-- [ ] `[semantic-release]` добавить механизм обновления версии в gradle.properties
-- [ ] `[semantic-release]` добавить генерацию CHANGELOG.md
-- [ ] `[semantic-release]` организовать процесс выкатки релиза, чтобы его можно было
-  частично-перезапускать([idea](https://github.com/semantic-release/semantic-release/discussions/2331))
-- [ ] `[semantic-release]` добавить публикацию в docker hub
-- [ ] `[semantic-release]` добавить нотификации об удачном/сломанном релизе
-- [ ] `[test]` добавить unit-tests и их вызов в CI
-- [ ] `[test]` добавить линтеры([idea](https://github.com/diffplug/spotless))
-- [ ] `[license][test]` добавить проверку лицензионных заголовков
-- [ ] `[license][gradle]` добавить функцию автоматического задания лицензионных заголовков
-- [ ] `[license][semantic-release]` добавить генерацию LICENSES_THIRD_PARTY.txt
-- [ ] `[gradle]` вынести зависимости в toml
-- [ ] `[gradle]` добавлять покрытие тестами jacoco
-- [ ] `[gradle]` добавлять аналогию maven-enforcer-plugin
-- [ ] `[gradle]` проверять конфликты зависимостей
-- [ ] добавить docker-compose для локальных запусков
-- [ ]
+JVM Kotlin Gradle
 
-## Quick start
+## Getting Started
 
-- npm i
+### Prerequisites
+
+- [node.js/npm](https://nodejs.org/en/download)
+- [docker](https://docs.docker.com/engine/install)
+- [jvm](https://adoptium.net/temurin/releases)
+- [gradle](https://gradle.org/install/)
+
+### Development
+
+```shell
+npm i # need for install git hooks
+```
+
+### Installation
+
+```shell
+TODO
+```
 
 ## Applied practices
 
@@ -40,7 +58,9 @@
 
 Для организации автоматического создания веток на основе правил из issue используется [create-issue-branch].
 Порядок действия:
-- при задании assignee для issue автоматически создаётся ветка и pull request на основе правил из [issue-branch.yml](.github/issue-branch.yml)
+
+- при задании assignee для issue автоматически создаётся ветка и pull request на основе правил
+  из [issue-branch.yml](.github/issue-branch.yml)
 - ?? что будет при закрытии pr
 
 ### Github labels
@@ -59,6 +79,16 @@
 CI [wagoid/commitlint-github-action].
 
 Конфигурация commitlint находится в [commitlint.config.js](configs/commitlint.config.js).
+
+## Security
+
+gradle-semantic-release-example is provided **"as is"** without any **warranty**. Use at your own risk.
+
+## License
+
+This project is licensed under the **Apache Software License 2.0**.
+
+See [LICENSE](LICENSE) for more information.
 
 ## External resources
 

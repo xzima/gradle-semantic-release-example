@@ -1,0 +1,32 @@
+---
+# see https://github.com/robvanderleek/create-issue-branch
+# A developer that wants to work on issue gives command /cib as a comment on the issue
+name: Issue Branch Creator
+
+on:
+  # The issues event below is only needed for the default (auto) mode,
+  # you can remove it otherwise
+  issues:
+    types: [ assigned ]
+  # The issue_comment event below is only needed for the ChatOps mode,
+  # you can remove it otherwise
+  # issue_comment:
+  #   types: [ created ]
+  # The issues event below is only needed for `autoCloseIssue: true`,
+  # you can remove it otherwise
+  # pull_request:
+  #   types: [ closed ]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  create_issue_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ♻️ Processing
+        uses: robvanderleek/create-issue-branch@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

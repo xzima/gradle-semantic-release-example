@@ -9,15 +9,9 @@
   color: ee0701
   description: "Исправление проблем в production окружении."
 
-- name: "question"
-  color: 2af79e
-  description: "Вопрос о том, как пользоваться проектом."
 - name: "maintenance"
   color: 2af79e
   description: "Общие задачи для обслуживания проекта."
-- name: "enhancement"
-  color: 1d76db
-  description: "Предложения по улучшению алгоритмов, средств разработки и т.д."
 
 - name: "security"
   color: ee0701
@@ -46,26 +40,6 @@
 - name: "in-progress"
   color: fbca04
   description: "В настоящее время решается разработчиком."
-- name: "stale"
-  color: fef2c0
-  description: "PR помеченный как неактивный в течение достаточно долгого времени."
-- name: "no-stale"
-  color: fef2c0
-  description: "PR исключенный из процесса отслеживания активности."
-
-- name: "incomplete"
-  color: fef2c0
-  description: "Недостаточно информации."
-- name: "invalid"
-  color: fef2c0
-  description: "off-topic, spam, или иным образом не относится к этому проекту."
-
-- name: "beginner-friendly"
-  color: 0e8a16
-  description: "Хороший первый выпуск для людей, желающих внести свой вклад в этот проект."
-- name: "help-wanted"
-  color: 0e8a16
-  description: "Нам нужны дополнительные руки помощи или опыт, чтобы решить эту проблему!"
 
 - name: "priority-critical"
   color: ee0701
