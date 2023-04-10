@@ -96,6 +96,16 @@ CI [wagoid/commitlint-github-action].
 - использовать ветку develop как базовую
 - Использовать [Dependency Dashboard Approval workflow] для обновления всех зависимостей
 
+### Automated Gitflow pull requests
+
+Для автоматического создания pull requests между главной веткой(master), ветка разработки(develop) и
+ветками выпуска(rc,release) используется [gitflow-action].
+
+В его обязанности входит:
+
+- при появлении ветки rc, создание pull request rc->master
+- при изменении ветки master, создание pull request master->develop
+
 ## Security
 
 gradle-semantic-release-example is provided **"as is"** without any **warranty**. Use at your own risk.
@@ -134,3 +144,5 @@ See [LICENSE](LICENSE) for more information.
 [renovate]:https://github.com/renovatebot/renovate
 
 [Dependency Dashboard Approval workflow]:https://docs.renovatebot.com/key-concepts/dashboard/#dependency-dashboard-approval-workflow
+
+[gitflow-action]:https://github.com/Logerfo/gitflow-action
