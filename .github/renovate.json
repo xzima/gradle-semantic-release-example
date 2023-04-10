@@ -1,11 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
-    ":semanticCommits",
-    ":semanticCommitTypeAll(build)",
-    ":semanticCommitScope(deps)"
+    "config:base"
   ],
+  "assigneesFromCodeOwners": true,
+  "semanticCommits": "enabled",
+  "semanticCommitType": "build",
+  "semanticCommitScope": "deps",
   "labels": [
     "dependencies"
   ],
