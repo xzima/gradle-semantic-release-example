@@ -7,6 +7,12 @@
   "semanticCommits": "enabled",
   "semanticCommitType": "build",
   "semanticCommitScope": "deps",
+  "packageRules": [
+    {
+      "matchPackagePatterns": "*",
+      "semanticCommitType": "build"
+    }
+  ],
   "labels": [
     "dependencies"
   ],
