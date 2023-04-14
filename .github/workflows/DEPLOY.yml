@@ -7,8 +7,15 @@ on:
     branches:
       - develop
       - master
+      - rc
   pull_request:
     types: [ opened, synchronize, reopened ]
+
+permissions:
+  checks: write
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
   lint:
@@ -25,3 +32,118 @@ jobs:
         with:
           configFile: configs/commitlint.config.js
           helpURL: https://www.conventionalcommits.org
+
+  test:
+#    if: ${{ !(github.event_name == 'pull_request' && contains('master rc', github.head_ref)) }}
+    needs: [ lint ]
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+#      - name: init jvm
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#          cache: 'maven'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        # Cache downloaded JDKs in addition to the default directories.
+        gradle-home-cache-includes: |
+          caches
+          notifications
+          jdks
+        # Exclude the local build-cache and keyrings from the directories cached.
+        gradle-home-cache-excludes: |
+          caches/build-cache-1
+          caches/keyrings
+
+      - name: Run tests
+        run: ./gradlew build
+
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3.1.1
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          files: target/site/jacoco/jacoco.xml
+#          env_vars: RUNNER_OS,JAVA_HOME
+#          verbose: true
+#          fail_ci_if_error: true
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: "build/test-results/test/TEST-*.xml"
+
+  release:
+    if: ${{ github.event_name != 'pull_request' }}
+    needs: [ test ]
+    name: Release
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.release.outputs.new_release_published }}
+      new_release_version: ${{ steps.release.outputs.new_release_version }}
+      branch_type: ${{ steps.release.outputs.branch_type }}
+      branch_name: ${{ steps.release.outputs.branch_name }}
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+#      - name: Login to Docker Hub
+#        uses: docker/login-action@v2.1.0
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+#      - name: init jvm
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#          cache: 'maven'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        # Cache downloaded JDKs in addition to the default directories.
+        gradle-home-cache-includes: |
+          caches
+          notifications
+          jdks
+        # Exclude the local build-cache and keyrings from the directories cached.
+        gradle-home-cache-excludes: |
+          caches/build-cache-1
+          caches/keyrings
+
+      - name: init npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - id: release
+        name: Release
+        run: npm run semantic-release
+        env:
+#          DOCKER_IMAGE_NAME: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_HUB_LOGIN: alexzima
+          DOCKER_HUB_PASSWORD: DOCKERHUB_TOKEN
+          # SEMANTIC_RELEASE_PACKAGE: ${{ github.event.repository.name }}
+
+
+      - name: Do something when a new release published
+        run: |
+          echo ${{ steps.release.outputs.new_release_published }}
+          echo ${{ steps.release.outputs.new_release_version }}
+          echo ${{ steps.release.outputs.branch_type }}
+          echo ${{ steps.release.outputs.branch_name }}
