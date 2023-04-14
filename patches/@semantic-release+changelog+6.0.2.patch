@@ -1,0 +1,18 @@
+diff --git a/node_modules/@semantic-release/changelog/lib/prepare.js b/node_modules/@semantic-release/changelog/lib/prepare.js
+index 7ce101a..3b75adc 100644
+--- a/node_modules/@semantic-release/changelog/lib/prepare.js
++++ b/node_modules/@semantic-release/changelog/lib/prepare.js
+@@ -2,11 +2,11 @@ const path = require('path');
+ const {readFile, writeFile, ensureFile} = require('fs-extra');
+ const resolveConfig = require('./resolve-config.js');
+ 
+-module.exports = async (pluginConfig, {cwd, nextRelease: {notes}, logger}) => {
++module.exports = async (pluginConfig, {cwd, nextRelease: {notes}, logger, branch: {type}}) => {
+   const {changelogFile, changelogTitle} = resolveConfig(pluginConfig);
+   const changelogPath = path.resolve(cwd, changelogFile);
+ 
+-  if (notes) {
++  if (type !== 'prerelease' && notes) {
+     await ensureFile(changelogPath);
+     const currentFile = (await readFile(changelogPath)).toString().trim();
+ 

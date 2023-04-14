@@ -1,0 +1,33 @@
+diff --git a/node_modules/@semantic-release/git/lib/git.js b/node_modules/@semantic-release/git/lib/git.js
+index 267ef1d..c5c6b6c 100644
+--- a/node_modules/@semantic-release/git/lib/git.js
++++ b/node_modules/@semantic-release/git/lib/git.js
+@@ -16,13 +16,13 @@ async function getModifiedFiles(execaOptions) {
+ }
+ 
+ /**
+- * Add a list of file to the Git index. `.gitignore` will be ignored.
++ * Add a list of file to the Git index.
+  *
+  * @param {Array<String>} files Array of files path to add to the index.
+  * @param {Object} [execaOpts] Options to pass to `execa`.
+  */
+ async function add(files, execaOptions) {
+-  const shell = await execa('git', ['add', '--force', '--ignore-errors', ...files], {...execaOptions, reject: false});
++  const shell = await execa('git', ['add', '--ignore-errors', ...files], {...execaOptions, reject: false});
+   debug('add file to git index', shell);
+ }
+ 
+diff --git a/node_modules/@semantic-release/git/lib/prepare.js b/node_modules/@semantic-release/git/lib/prepare.js
+index 0e85b00..d777334 100644
+--- a/node_modules/@semantic-release/git/lib/prepare.js
++++ b/node_modules/@semantic-release/git/lib/prepare.js
+@@ -64,7 +64,7 @@ module.exports = async (pluginConfig, context) => {
+       message
+         ? template(message)({branch: branch.name, lastRelease, nextRelease})
+         : `chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}`,
+-      {env, cwd}
++      {env, cwd, reject: false}
+     );
+     await push(repositoryUrl, branch.name, {env, cwd});
+     logger.log('Prepared Git release: %s', nextRelease.gitTag);
