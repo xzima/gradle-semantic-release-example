@@ -1,5 +1,8 @@
 import fr.brouillard.oss.gradle.plugins.JGitverPluginExtensionBranchPolicy
-import fr.brouillard.oss.jgitver.Version
+import fr.brouillard.oss.jgitver.Strategies
+import io.github.z4kn4fein.semver.Inc
+import io.github.z4kn4fein.semver.inc
+import io.github.z4kn4fein.semver.toVersion
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -8,6 +11,12 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.jgitver)
+}
+
+buildscript {
+    dependencies {
+        classpath(libs.bundles.buildscript.classpath)
+    }
 }
 
 group = "com.github.xzima"
@@ -64,6 +73,9 @@ kotlin {
 }
 
 jgitver {
+    strategy = Strategies.PATTERN
+    regexVersionTag = "(.+)"
+    versionPattern = "\${meta.BASE_TAG}+\${meta.COMMIT_DISTANCE}+\${meta.DIRTY}"
     policy(closureOf<JGitverPluginExtensionBranchPolicy> {
         // remove branch name from version for all branches
         pattern = "(.*)"
@@ -72,19 +84,26 @@ jgitver {
 }
 
 project.afterEvaluate {
-    val versionList = this.version.toString().split("-")
-    if (2 != versionList.size) {
-        // Expected like 1.1.0-123
+    // Expected like 1.1.0+123+false | 1.1.0-rc.20+0+true
+    val versionList = this.version.toString().split("+")
+    if (3 != versionList.size) {
         throw InvalidUserDataException("Invalid version format: ${this.version}")
     }
 
-    val (semVer, distance) = versionList
+    val (tag, distance, isDirtyStr) = versionList
+    val semVer = tag.toVersion()
 
-    this.version = if ("0" == distance) {
-        // 1.1.0-0 -> 1.1.0
-        semVer
+    this.version = if (isDirtyStr.toBoolean() || "0" != distance) {
+        if (semVer.isPreRelease) {
+            // 1.1.0-rc.20+123+false | 1.1.0-rc.20+0+true -> 1.1.0-rc.21
+            semVer.inc(Inc.PRE_RELEASE).copy(buildMetadata = "SNAPSHOT")
+        } else {
+            // 1.1.0+123+false | 1.1.0+0+true -> 1.1.1
+            semVer.inc(Inc.PATCH).copy(buildMetadata = "SNAPSHOT")
+        }
     } else {
-        // 1.1.0-123 -> 1.1.1-SNAPSHOT
-        "${Version.parse(semVer).incrementPatch()}-SNAPSHOT"
+        // 1.1.0+0+false -> 1.1.0
+        // 1.1.0-rc.20+0+false -> 1.1.0-rc.20
+        semVer.toString()
     }
 }

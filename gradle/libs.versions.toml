@@ -4,6 +4,7 @@ kotlin = "1.8.20"
 spring-boot = "3.0.5"
 spring-dependency = "1.1.0"
 jgitver = "0.9.1"
+semver = "1.4.2"
 
 [libraries]
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
@@ -11,11 +12,13 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+semver = { module = "io.github.z4kn4fein:semver", version.ref = "semver" }
 
 [bundles]
 implementation = ["spring-boot-starter-web", "jackson-module-kotlin", "kotlin-reflect"]
 development = ["spring-boot-devtools"]
 test = ["spring-boot-starter-test"]
+buildscript-classpath = ["semver"]
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

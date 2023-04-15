@@ -22,6 +22,15 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
+#      - name: Debug action
+#        uses: hmarr/debug-action@v2.1.0
+#      - name: Debug echo
+#        env:
+#          JOB_CONTENT: "${{ toJson(job) }}"
+#          STEPS_CONTENT: "${{ toJson(steps) }}"
+#          GITHUB_CONTENT: "${{ toJson(github) }}"
+#        run: "echo 'Debug echo'"
+
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v3
         with:
@@ -53,7 +62,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          cache-read-only: ${{ github.event_name != 'pull_request' }}
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Run tests
         run: ./gradlew build
@@ -105,7 +114,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          cache-read-only: ${{ github.event_name != 'pull_request' }}
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: init npm
         uses: actions/setup-node@v3
@@ -123,7 +132,7 @@ jobs:
 #          DOCKER_IMAGE_NAME: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_HUB_LOGIN: alexzima
-          DOCKER_HUB_PASSWORD: DOCKERHUB_TOKEN
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
           # SEMANTIC_RELEASE_PACKAGE: ${{ github.event.repository.name }}
 
 
