@@ -22,14 +22,14 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Debug action
-        uses: hmarr/debug-action@v2.1.0
-      - name: Debug echo
-        env:
-          JOB_CONTENT: "${{ toJson(job) }}"
-          STEPS_CONTENT: "${{ toJson(steps) }}"
-          GITHUB_CONTENT: "${{ toJson(github) }}"
-        run: "echo 'Debug echo'"
+#      - name: Debug action
+#        uses: hmarr/debug-action@v2.1.0
+#      - name: Debug echo
+#        env:
+#          JOB_CONTENT: "${{ toJson(job) }}"
+#          STEPS_CONTENT: "${{ toJson(steps) }}"
+#          GITHUB_CONTENT: "${{ toJson(github) }}"
+#        run: "echo 'Debug echo'"
 
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v3

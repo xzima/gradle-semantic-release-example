@@ -3,7 +3,7 @@ const GITHUB_OUTPUT = process.env.GITHUB_OUTPUT
 const DOCKER_HUB_LOGIN = process.env.DOCKER_HUB_LOGIN
 const DOCKER_HUB_PASSWORD = process.env.DOCKER_HUB_PASSWORD
 // see https://github.com/semantic-release/env-ci/blob/master/services/github.js
-const BRANCH_NAME = process.env.GITHUB_REF
+const BRANCH_NAME = process.env.GITHUB_REF_NAME
 console.log(`!! branch: ${BRANCH_NAME}`)
 //----------------------------------------------------------------------------------------------------------------------
 const publishCmd = `
