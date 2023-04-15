@@ -11,7 +11,7 @@ const publishCmd = `
 #then
 #    withLatest='-PwithLatest' 
 #fi
-./gradlew -B bootBuildImage -PdockerHubUsername=${DOCKER_HUB_LOGIN} -PdockerHubPassword=${DOCKER_HUB_PASSWORD} # -PwithLatest
+./gradlew bootBuildImage -PdockerHubUsername=${DOCKER_HUB_LOGIN} -PdockerHubPassword=${DOCKER_HUB_PASSWORD} # -PwithLatest
 `
 
 const successCmd = `
@@ -66,10 +66,10 @@ const config = {
                 ]
             }
         }],
+        '@semantic-release/github',
         // '@semantic-release/changelog',
         ['@semantic-release/exec', {publishCmd, successCmd}],
         // ['@semantic-release/git', {assets: '.'}],
-        '@semantic-release/github',
         // ["semantic-release-slack-bot", {"notifyOnSuccess": true, "notifyOnFail": true, "markdownReleaseNotes": true}]
     ]
 }
