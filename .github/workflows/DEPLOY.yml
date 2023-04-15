@@ -47,7 +47,7 @@ jobs:
       - name: init jvm
         uses: actions/setup-java@v3
         with:
-#          distribution: 'temurin'
+          distribution: 'liberica'
           java-version: '17'
 #          cache: 'maven'
 
@@ -108,7 +108,7 @@ jobs:
       - name: init jvm
         uses: actions/setup-java@v3
         with:
-#          distribution: 'temurin'
+          distribution: 'liberica'
           java-version: '17'
 #          cache: 'maven'
       - name: Setup Gradle
