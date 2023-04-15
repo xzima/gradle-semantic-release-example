@@ -34,7 +34,7 @@ jobs:
           helpURL: https://www.conventionalcommits.org
 
   test:
-#    if: ${{ !(github.event_name == 'pull_request' && contains('master rc', github.head_ref)) }}
+    if: ${{ !(github.event_name == 'pull_request' && contains('master rc', github.head_ref)) }}
     needs: [ lint ]
     name: Run tests
     runs-on: ubuntu-latest
@@ -44,25 +44,25 @@ jobs:
         with:
           fetch-depth: 0
 
-#      - name: init jvm
-#        uses: actions/setup-java@v3
-#        with:
+      - name: init jvm
+        uses: actions/setup-java@v3
+        with:
 #          distribution: 'temurin'
-#          java-version: '17'
+          java-version: '17'
 #          cache: 'maven'
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          # Cache downloaded JDKs in addition to the default directories.
-          gradle-home-cache-includes: |
-            caches
-            notifications
-            jdks
-          # Exclude the local build-cache and keyrings from the directories cached.
-          gradle-home-cache-excludes: |
-            caches/build-cache-1
-            caches/keyrings
+#        with:
+#          # Cache downloaded JDKs in addition to the default directories.
+#          gradle-home-cache-includes: |
+#            caches
+#            notifications
+#            jdks
+#          # Exclude the local build-cache and keyrings from the directories cached.
+#          gradle-home-cache-excludes: |
+#            caches/build-cache-1
+#            caches/keyrings
 
       - name: Run tests
         run: ./gradlew build
@@ -105,24 +105,24 @@ jobs:
 #          username: ${{ secrets.DOCKERHUB_USERNAME }}
 #          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-#      - name: init jvm
-#        uses: actions/setup-java@v3
-#        with:
+      - name: init jvm
+        uses: actions/setup-java@v3
+        with:
 #          distribution: 'temurin'
-#          java-version: '17'
+          java-version: '17'
 #          cache: 'maven'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          # Cache downloaded JDKs in addition to the default directories.
-          gradle-home-cache-includes: |
-            caches
-            notifications
-            jdks
-          # Exclude the local build-cache and keyrings from the directories cached.
-          gradle-home-cache-excludes: |
-            caches/build-cache-1
-            caches/keyrings
+#        with:
+#          # Cache downloaded JDKs in addition to the default directories.
+#          gradle-home-cache-includes: |
+#            caches
+#            notifications
+#            jdks
+#          # Exclude the local build-cache and keyrings from the directories cached.
+#          gradle-home-cache-excludes: |
+#            caches/build-cache-1
+#            caches/keyrings
 
       - name: init npm
         uses: actions/setup-node@v3

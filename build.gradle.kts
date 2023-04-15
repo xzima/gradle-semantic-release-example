@@ -25,7 +25,6 @@ dependencies {
 tasks.compileKotlin {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = libs.versions.jvm.get()
     }
 }
 
