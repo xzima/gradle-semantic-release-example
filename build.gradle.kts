@@ -75,7 +75,7 @@ kotlin {
 jgitver {
     strategy = Strategies.PATTERN
     regexVersionTag = "(.+)"
-    versionPattern = "\${meta.BASE_TAG}__\${meta.COMMIT_DISTANCE}__\${meta.DIRTY}"
+    versionPattern = "\${meta.BASE_TAG}+\${meta.COMMIT_DISTANCE}+\${meta.DIRTY}"
     policy(closureOf<JGitverPluginExtensionBranchPolicy> {
         // remove branch name from version for all branches
         pattern = "(.*)"
@@ -84,8 +84,8 @@ jgitver {
 }
 
 project.afterEvaluate {
-    // Expected like 1.1.0__123__false | 1.1.0-rc.20__0__true
-    val versionList = this.version.toString().split("__")
+    // Expected like 1.1.0+123+false | 1.1.0-rc.20+0+true
+    val versionList = this.version.toString().split("+")
     if (3 != versionList.size) {
         throw InvalidUserDataException("Invalid version format: ${this.version}")
     }
@@ -95,15 +95,15 @@ project.afterEvaluate {
 
     this.version = if (isDirtyStr.toBoolean() || "0" != distance) {
         if (semVer.isPreRelease) {
-            // 1.1.0-rc.20__123__false | 1.1.0-rc.20__0__true -> 1.1.0-rc.21
+            // 1.1.0-rc.20+123+false | 1.1.0-rc.20+0+true -> 1.1.0-rc.21
             semVer.inc(Inc.PRE_RELEASE).copy(buildMetadata = "SNAPSHOT")
         } else {
-            // 1.1.0__123__false | 1.1.0__0__true -> 1.1.1
+            // 1.1.0+123+false | 1.1.0+0+true -> 1.1.1
             semVer.inc(Inc.PATCH).copy(buildMetadata = "SNAPSHOT")
         }
     } else {
-        // 1.1.0__0__false -> 1.1.0
-        // 1.1.0-rc.20__0__false -> 1.1.0-rc.20
+        // 1.1.0+0+false -> 1.1.0
+        // 1.1.0-rc.20+0+false -> 1.1.0-rc.20
         semVer.toString()
     }
 }
