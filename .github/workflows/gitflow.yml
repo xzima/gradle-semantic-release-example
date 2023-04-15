@@ -1,0 +1,25 @@
+---
+# see https://github.com/Logerfo/gitflow-action
+name: Gitflow
+on:
+  push:
+    branches:
+      - rc
+      - master
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  gitflow:
+    name: 🔨 Create PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Logerfo/gitflow-action@0.0.4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release: rc
+          master: master
+          dev: develop
+          auto-merge: false
