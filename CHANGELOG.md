@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.0...1.0.1) (2023-04-15)
+
+
+### 🐞 Bug Fixes
+
+* change separator for version calculation logic ([95b60bc](https://github.com/xzima/gradle-semantic-release-example/commit/95b60bcd6ccf0c0b5cfb85081e163e262a32577b))
+
 ## 1.0.0 (2023-04-15)
 
 
