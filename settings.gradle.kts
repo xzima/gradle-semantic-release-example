@@ -6,4 +6,3 @@ pluginManagement {
     
 }
 rootProject.name = "gradle-semantic-release-example"
-
