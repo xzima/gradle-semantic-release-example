@@ -53,7 +53,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          cache-read-only: ${{ github.event_name != 'pull_request' }}
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Run tests
         run: ./gradlew build
@@ -105,7 +105,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          cache-read-only: ${{ github.event_name != 'pull_request' }}
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: init npm
         uses: actions/setup-node@v3
