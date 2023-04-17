@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.2...1.0.3) (2023-04-17)
+
+
+### 🔨 Build System
+
+* **deps:** update commitlint monorepo to v17.6.1 ([c3daf3a](https://github.com/xzima/gradle-semantic-release-example/commit/c3daf3aa76712c29fdf5f6f26a55a983b56bb034))
+* **deps:** update dependency gradle to v8.1 ([9372dcb](https://github.com/xzima/gradle-semantic-release-example/commit/9372dcb5b4b066eb8f17e232382fc61e7c6192c9))
+
 ## [1.0.2](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.1...1.0.2) (2023-04-15)
 
 
