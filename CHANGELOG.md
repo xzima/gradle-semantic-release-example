@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.1...1.0.2) (2023-04-15)
+
+
+### 🔨 Build System
+
+* **deps:** update wagoid/commitlint-github-action action to v5.4.1 ([67626a3](https://github.com/xzima/gradle-semantic-release-example/commit/67626a31edc2b22106ca5bf7cc2bc53a1a2d3eec))
+
 ## [1.0.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.0...1.0.1) (2023-04-15)
 
 
