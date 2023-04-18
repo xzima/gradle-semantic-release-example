@@ -106,6 +106,45 @@ CI [wagoid/commitlint-github-action].
 - при появлении ветки rc, создание pull request rc->master
 - при изменении ветки master, создание pull request master->develop
 
+## CI test section
+
+Тестирование в контексте CI происходит следующим образом:
+
+- задача на тестирование запускается для pull на ветках develop, master, rc и на pull request для остальных веток
+- перед запуском тестов выполняется [actions/setup-java] - установка jdk и [gradle/gradle-build-action] - более
+  продуктивное кеширование зависимостей
+- выполняется `./gradlew build`, которые включает в себя тесты
+- далее запускается [EnricoMi/publish-unit-test-result-action] - публикация результатов выполнения тестов в github
+  actions и pull request
+
+## Semantic version publication
+
+Для организации версионирования на основе [semantic version] используется [semantic-release].
+Конфигурационный файл для [semantic-release] находится в [release.config.js](release.config.js) и содержит следующие
+плагины:
+
+- semantic-release/commit-analyzer - определяет соответствие скоупов [Conventional Commits] с уровнем публикуемого
+  релиза.
+- semantic-release/release-notes-generator - генерирует release notes на основе [Conventional Commits]
+- semantic-release/github - публикует релиз в github и комментирует pull request и issues связанные с релизом
+- semantic-release/exec - реализует кастомные этапы, в том числе публикацию в docker hub и выведение переменных из
+  процесса [semantic-release] для использования в других этапах github actions
+- semantic-release/changelog - генерирует [CHANGELOG.md](CHANGELOG.md) для стабильных релизов, исключающих prerelease
+- semantic-release/git - выполняет фиксацию изменений в репозитории в процессе выполнения выкатки релиза. Включает
+  изменения [CHANGELOG.md](CHANGELOG.md).
+
+Для поддержки [semantic version] на уровне gradle используется плагин [jgitver] и библиотека [kotlin-semver].
+Так как [jgitver] рассчитана на работу с аннотированными тегами, а [semantic-release] - нет, то для правильного
+взаимодействия [build.gradle.kts](build.gradle.kts) был кастомизирован в области расчета версии с использованием
+библиотеки [kotlin-semver].
+
+## Docker hub publication
+
+Для публикации образов docker используются возможности [Spring Boot Gradle Plugin].
+Был кастомизирован [build.gradle.kts](build.gradle.kts) в области задачи `bootBuildImage`.
+На основе параметров `dockerHubUsername` и `dockerHubPassword` определяется имя образа и необходимость его публикации в
+docker hub. Параметр `withLatest` используется для создания/публикации дополнительного тега docker image - latest.
+
 ## Security
 
 gradle-semantic-release-example is provided **"as is"** without any **warranty**. Use at your own risk.
@@ -146,3 +185,19 @@ See [LICENSE](LICENSE) for more information.
 [Dependency Dashboard Approval workflow]:https://docs.renovatebot.com/key-concepts/dashboard/#dependency-dashboard-approval-workflow
 
 [gitflow-action]:https://github.com/Logerfo/gitflow-action
+
+[actions/setup-java]:https://github.com/actions/setup-java
+
+[gradle/gradle-build-action]:https://github.com/gradle/gradle-build-action
+
+[EnricoMi/publish-unit-test-result-action]:https://github.com/EnricoMi/publish-unit-test-result-action
+
+[semantic version]:https://semver.org/
+
+[semantic-release]:https://github.com/semantic-release/semantic-release
+
+[jgitver]:https://github.com/jgitver/gradle-jgitver-plugin
+
+[kotlin-semver]:https://github.com/z4kn4fein/kotlin-semver
+
+[Spring Boot Gradle Plugin]:https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/
