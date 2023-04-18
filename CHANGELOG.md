@@ -1,3 +1,15 @@
+## [1.0.4](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.3...1.0.4) (2023-04-18)
+
+
+### 🔨 Build System
+
+* **deps:** update commitlint monorepo to v17.6.1 ([8c445f8](https://github.com/xzima/gradle-semantic-release-example/commit/8c445f8c044bd15709fcdba29c50ada94ace7b62))
+
+
+### 📔 Documentation
+
+* **release:** add CI test, Semantic version publication and Docker hub publication sections ([16bc3fe](https://github.com/xzima/gradle-semantic-release-example/commit/16bc3fe07a5f4671be9f5ef7d1fc442d617e9679))
+
 ## [1.0.3](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.2...1.0.3) (2023-04-17)
 
 
