@@ -81,7 +81,7 @@ TODO
 используется [husky]+[commitlint], а на уровне
 CI [wagoid/commitlint-github-action].
 
-Конфигурация commitlint находится в [commitlint.config.js](configs/commitlint.config.js).
+Конфигурация commitlint находится в [commitlint.config.js](commitlint.config.js).
 
 ### Automated dependency updates
 

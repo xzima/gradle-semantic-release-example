@@ -23,3 +23,8 @@ jobs:
           master: master
           dev: develop
           auto-merge: false
+
+concurrency:
+  # один запуск workflow для каждой ветки
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
