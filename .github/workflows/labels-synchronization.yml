@@ -1,6 +1,6 @@
 ---
 # see https://github.com/micnncim/action-label-syncer
-name: Sync labels
+name: Labels synchronization
 
 on:
   push:
