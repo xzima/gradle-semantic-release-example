@@ -1,0 +1,99 @@
+---
+name: Lint & Test
+
+on:
+  workflow_call:
+    inputs:
+      run-lint:
+        type: boolean
+        default: true
+      debug:
+        type: boolean
+        default: false
+      cache-read-only:
+        type: boolean
+        default: false
+      upload-coverage:
+        type: boolean
+        default: false
+      upload-test-result:
+        type: boolean
+        default: true
+
+
+# see https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#permissions
+permissions:
+  issues: read
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  lint:
+    name: Lint
+    if: ${{ inputs.run-lint }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug action
+        if: ${{ inputs.debug }}
+        uses: hmarr/debug-action@v2.1.0
+
+      - name: Debug echo
+        if: ${{ inputs.debug }}
+        env:
+          JOB_CONTENT: "${{ toJson(job) }}"
+          STEPS_CONTENT: "${{ toJson(steps) }}"
+          GITHUB_CONTENT: "${{ toJson(github) }}"
+        run: "echo 'Debug echo'"
+
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Lint Commit Messages
+        uses: wagoid/commitlint-github-action@v5.4.1
+        with:
+          configFile: commitlint.config.js
+          helpURL: https://www.conventionalcommits.org
+
+  test:
+    needs: [ lint ]
+    name: Run tests
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: init jvm
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'liberica'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: ${{ inputs.cache-read-only }}
+
+      - name: Run tests
+        run: ./gradlew build
+
+      - name: Upload coverage to Codecov
+        if: ${{ inputs.upload-coverage }}
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: target/site/jacoco/jacoco.xml
+          env_vars: RUNNER_OS,JAVA_HOME
+          verbose: true
+          fail_ci_if_error: true
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: ${{ inputs.upload-test-result }}
+        with:
+          junit_files: "build/test-results/test/TEST-*.xml"
