@@ -31,7 +31,6 @@ jobs:
           GITHUB_CONTENT: "${{ toJson(github) }}"
           ENV_CONTENT: "${{ toJson(vars) }}"
           VARS_CONTENT: "${{ toJson(vars) }}"
-          JOBS_CONTENT: "${{ toJson(jobs) }}"
           NEEDS_CONTENT: "${{ toJson(needs) }}"
           INPUTS_CONTENT: "${{ toJson(inputs) }}"
         run: "echo 'Debug echo'"
