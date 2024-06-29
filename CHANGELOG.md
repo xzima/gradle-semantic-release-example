@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.2...1.1.3) (2024-06-29)
+
+
+### ⚙️ Continuous Integration
+
+* add more permissions for publish-docker-image.yml ([8c9ea6a](https://github.com/xzima/gradle-semantic-release-example/commit/8c9ea6af0027dcf58627e2b44f542f6ffc87df87))
+
 ## [1.1.2](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.1...1.1.2) (2024-06-29)
 
 
