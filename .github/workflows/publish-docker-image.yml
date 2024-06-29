@@ -6,6 +6,11 @@ on:
     types:
       - published
 
+permissions:
+  issues: read
+  checks: write
+  pull-requests: write
+
 jobs:
   test:
     name: Test
