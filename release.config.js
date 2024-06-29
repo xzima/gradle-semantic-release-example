@@ -1,17 +1,10 @@
 // original https://github.com/semantic-release/semantic-release/issues/1231#issuecomment-1063671157
 const GITHUB_OUTPUT = process.env.GITHUB_OUTPUT
-const DOCKER_HUB_LOGIN = process.env.DOCKER_HUB_LOGIN
-const DOCKER_HUB_PASSWORD = process.env.DOCKER_HUB_PASSWORD
 // see https://github.com/semantic-release/env-ci/blob/master/services/github.js
 const BRANCH_NAME = process.env.GITHUB_REF_NAME
-console.log(`!! branch: ${BRANCH_NAME}`)
 //----------------------------------------------------------------------------------------------------------------------
-const publishCmd = `
-#if [ \${branch.type} = 'release' ]
-#then
-#    withLatest='-PwithLatest' 
-#fi
-./gradlew bootBuildImage -PdockerHubUsername=${DOCKER_HUB_LOGIN} -PdockerHubPassword=${DOCKER_HUB_PASSWORD} # -PwithLatest
+const prepareCmd = `
+    ./gradlew genDocs
 `
 
 const successCmd = `
@@ -43,6 +36,7 @@ const config = {
                 {type: 'feat', release: 'minor'},
                 {type: 'fix', release: 'patch'},
                 {type: 'perf', release: 'patch'},
+                {type: 'chore', release: 'patch'},
                 // {type: 'docs', release: 'patch'},
                 {type: 'build', release: 'patch'},
                 {type: 'ci', release: 'patch'},
@@ -67,10 +61,8 @@ const config = {
             }
         }],
         '@semantic-release/github',
-        // '@semantic-release/changelog',
-        ['@semantic-release/exec', {publishCmd, successCmd}],
-        // ['@semantic-release/git', {assets: '.'}],
-        // ["semantic-release-slack-bot", {"notifyOnSuccess": true, "notifyOnFail": true, "markdownReleaseNotes": true}]
+        ['@semantic-release/exec', {prepareCmd, successCmd}],
+        // ["semantic-release-slack-bot", {"notifyOnSuccess": true, "notifyOnFail": true, "markdownReleaseNotes": true}],
     ]
 }
 

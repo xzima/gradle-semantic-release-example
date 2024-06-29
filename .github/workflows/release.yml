@@ -1,0 +1,75 @@
+---
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.release.outputs.new_release_published }}
+      new_release_version: ${{ steps.release.outputs.new_release_version }}
+      branch_type: ${{ steps.release.outputs.branch_type }}
+      branch_name: ${{ steps.release.outputs.branch_name }}
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # Это сохраняет используемый токен. Нужно чтобы semantic-release и semantic-release/git использовали его,
+          # а не env.GITHUB_TOKEN, который должен использоваться только semantic-release/github
+          # see https://github.com/semantic-release/git/issues/196#issuecomment-702839100
+          persist-credentials: true
+
+      - name: init jvm
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'liberica'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
+
+      - name: init npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - id: release
+        name: Release
+        run: npx semantic-release # --debug
+        env:
+          # see https://github.com/semantic-release/github#github-authentication
+          # токен должен быть кастомный, чтобы могли отработать workflows реагирующие на публикацию релиза
+          # see https://github.com/orgs/community/discussions/25281#discussioncomment-3300251
+          GITHUB_TOKEN: ${{ secrets.SELF_GITHUB_TOKEN }}
+          # SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          # SEMANTIC_RELEASE_PACKAGE: ${{ github.event.repository.name }}
+
+
+      - name: Do something when a new release published
+        run: |
+          echo ${{ steps.release.outputs.new_release_published }}
+          echo ${{ steps.release.outputs.new_release_version }}
+          echo ${{ steps.release.outputs.branch_type }}
+          echo ${{ steps.release.outputs.branch_name }}
+
+
+concurrency:
+  # один запуск workflow для каждой ветки
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true

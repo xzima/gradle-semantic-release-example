@@ -1,9 +1,10 @@
 # see https://github.com/robvanderleek/create-issue-branch#configuration=
-# mode: chatops
+# mode: auto
 
 branchName: tiny # example: i15
 openDraftPR: true
 prSkipCI: true
+autoLinkIssue: true
 #openPR: true
 copyIssueDescriptionToPR: true
 copyIssueLabelsToPR: true

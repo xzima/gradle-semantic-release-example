@@ -1,6 +1,6 @@
 ---
 # see https://github.com/jesusvasquez333/verify-pr-label-action
-name: PR Labels
+name: PR Labels verification
 
 on:
   pull_request:
