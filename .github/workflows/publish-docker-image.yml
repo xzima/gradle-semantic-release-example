@@ -1,0 +1,57 @@
+---
+name: Docker Image publication
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  test:
+    name: Test
+    uses: ./.github/workflows/__tests.yml
+    secrets: inherit
+    with:
+      run-lint: false
+
+  publish:
+    needs: [ test ]
+    environment: DockerHub
+    name: Build & Publish Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: init jvm
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'liberica'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
+
+      - name: Build & Publish Docker Image
+        run: |-
+          ./gradlew bootBuildImage 
+              -PimageName=docker.io/${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} \
+              -PwithLatest \
+              -PdockerHubUsername=${DOCKER_HUB_USERNAME} \
+              -PdockerHubPassword=${DOCKER_HUB_PASSWORD}
+
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}
+          DOCKER_IMAGE_VERSION: ${{github.ref_name}}
+
+
+concurrency:
+  # один запуск для каждой ветки
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true

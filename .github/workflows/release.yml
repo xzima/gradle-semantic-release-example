@@ -1,13 +1,9 @@
 ---
-name: PR & Release
+name: Release
 
 on:
-  push:
-    branches: [ develop, rc, master ]
-  pull_request:
-    types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
 
-# see https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#permissions
 permissions:
   checks: write
   contents: write
@@ -15,14 +11,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  test:
-    uses: ./.github/workflows/__tests.yml
-    secrets: inherit
-    with:
-      cache-read-only: ${{ github.event_name == 'pull_request' }}
-
   release:
-    needs: [ test ]
     name: Release
     runs-on: ubuntu-latest
     outputs:
@@ -49,7 +38,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          cache-read-only: ${{ github.event_name == 'pull_request' }}
+          cache-read-only: false
 
       - name: init npm
         uses: actions/setup-node@v3
@@ -64,13 +53,10 @@ jobs:
         name: Release
         run: npx semantic-release # --debug
         env:
-          DOCKER_IMAGE_NAME: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}
           # see https://github.com/semantic-release/github#github-authentication
           # токен должен быть кастомный, чтобы могли отработать workflows реагирующие на публикацию релиза
           # see https://github.com/orgs/community/discussions/25281#discussioncomment-3300251
           GITHUB_TOKEN: ${{ secrets.SELF_GITHUB_TOKEN }}
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
           # SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           # SEMANTIC_RELEASE_PACKAGE: ${{ github.event.repository.name }}
 
@@ -84,6 +70,6 @@ jobs:
 
 
 concurrency:
-  # один запуск workflow для каждого pr или ветки
-  group: ${{github.workflow}}-${{github.head_ref || github.ref }}
+  # один запуск workflow для каждой ветки
+  group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true
