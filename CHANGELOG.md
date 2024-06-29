@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.4...1.1.0) (2024-06-29)
+
+
+### ⭐ New Features
+
+* upgrade concept ([#25](https://github.com/xzima/gradle-semantic-release-example/issues/25)) ([ddc88a9](https://github.com/xzima/gradle-semantic-release-example/commit/ddc88a944f0a82fc5bdaa44073ed5def138c0c8a))
+
 ## [1.0.4](https://github.com/xzima/gradle-semantic-release-example/compare/1.0.3...1.0.4) (2023-04-18)
 
 
