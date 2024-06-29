@@ -53,7 +53,7 @@ jobs:
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}
+          DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
           DOCKER_IMAGE_VERSION: ${{github.ref_name}}
 
 
