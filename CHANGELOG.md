@@ -1,3 +1,33 @@
+## [1.1.5](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.4...1.1.5) (2024-08-17)
+
+### 🔨 Build System
+
+* **deps-dev:** bump braces ([15cf3ce](https://github.com/xzima/gradle-semantic-release-example/commit/15cf3ce7c3ac7a681a24bacb0e8591013ddf0b90))
+* **deps:** update actions/checkout action to v4 ([928c454](https://github.com/xzima/gradle-semantic-release-example/commit/928c454de793d8719c6656ab68f8f10eed84b6ee))
+* **deps:** update actions/setup-java action to v4 ([595d361](https://github.com/xzima/gradle-semantic-release-example/commit/595d361806a635ef05b2a6152ed5dfed1f7f3952))
+* **deps:** update actions/setup-node action to v4 ([4b6410c](https://github.com/xzima/gradle-semantic-release-example/commit/4b6410c22af7f66f291076bf1b5769a13864464e))
+* **deps:** update codecov/codecov-action action to v3.1.6 ([c369c00](https://github.com/xzima/gradle-semantic-release-example/commit/c369c00aed485734e5be998bef4ff03124057976))
+* **deps:** update codecov/codecov-action action to v4 ([c826e7f](https://github.com/xzima/gradle-semantic-release-example/commit/c826e7fedc3163ad95dce11b800f52df68b6dfb5))
+* **deps:** update commitlint monorepo to v17.8.1 ([4b90499](https://github.com/xzima/gradle-semantic-release-example/commit/4b904994f4ef7a284c8682aee0bfed0ecece6f7a))
+* **deps:** update commitlint monorepo to v19 ([7df32dd](https://github.com/xzima/gradle-semantic-release-example/commit/7df32ddc356a7719eb329efe759bf8f32bb4a251))
+* **deps:** update dependency conventional-changelog-conventionalcommits to v8 ([0a38d0a](https://github.com/xzima/gradle-semantic-release-example/commit/0a38d0a45ae421936392b47ba44b090eb9510a94))
+* **deps:** update dependency gradle to v8.10 ([204bc30](https://github.com/xzima/gradle-semantic-release-example/commit/204bc3092d93efb5bc8e9814b703eb91a9d087d5))
+* **deps:** update dependency husky to v9 ([19c28ce](https://github.com/xzima/gradle-semantic-release-example/commit/19c28ce347c3c26434b162e14489a89fa0aac9d7))
+* **deps:** update dependency io.spring.dependency-management to v1.1.6 ([84dd9c5](https://github.com/xzima/gradle-semantic-release-example/commit/84dd9c5cff7c1d9efc6f517685f34094e5d040f3))
+* **deps:** update dependency org.springframework.boot to v3.3.2 ([2e8ca1a](https://github.com/xzima/gradle-semantic-release-example/commit/2e8ca1a31e50a7b72a351f300a85d4f9cc05f57a))
+* **deps:** update dependency semantic-release to v21.1.2 ([812ee36](https://github.com/xzima/gradle-semantic-release-example/commit/812ee36725bbcc9e9f6446c214b11a0756938dfa))
+* **deps:** update dependency semantic-release to v24 ([f6733af](https://github.com/xzima/gradle-semantic-release-example/commit/f6733af2d7b921c521749936b4ec5e5381f1e665))
+* **deps:** update gradle/actions action to v4 ([a35a61a](https://github.com/xzima/gradle-semantic-release-example/commit/a35a61a233460779a1e60cfea05f210e516d33f0))
+* **deps:** update hmarr/debug-action action to v3 ([ec1496a](https://github.com/xzima/gradle-semantic-release-example/commit/ec1496a09e6986b85d35456685d5b6fc5567e8dc))
+* **deps:** update kotlin monorepo to v1.9.25 ([6a3d97f](https://github.com/xzima/gradle-semantic-release-example/commit/6a3d97fd4856938e0a1be5a844fc164a1c4e3076))
+* **deps:** update kotlin monorepo to v2 ([842e690](https://github.com/xzima/gradle-semantic-release-example/commit/842e690645eb6901f2685663f9ea6740f416f895))
+* **deps:** update wagoid/commitlint-github-action action to v5.5.1 ([4bd6569](https://github.com/xzima/gradle-semantic-release-example/commit/4bd6569e3374b4928893861c2e1916ae24d22a9e))
+* **deps:** update wagoid/commitlint-github-action action to v6 ([a03f8ae](https://github.com/xzima/gradle-semantic-release-example/commit/a03f8aeeff6dbe30762d5c3750287803a062f07e))
+
+### ⚙️ Continuous Integration
+
+* add more permissions for publish-docker-image.yml ([342e9f6](https://github.com/xzima/gradle-semantic-release-example/commit/342e9f62578fe56c2d3ddadbebf190796003b39b))
+
 ## [1.1.4](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.3...1.1.4) (2024-06-29)
 
 
