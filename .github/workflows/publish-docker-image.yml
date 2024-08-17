@@ -32,7 +32,7 @@ jobs:
           fetch-depth: 0
 
       - name: init jvm
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'liberica'
           java-version: '17'
