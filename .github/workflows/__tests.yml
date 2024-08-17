@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Debug action
         if: ${{ inputs.debug }}
-        uses: hmarr/debug-action@v2.1.0
+        uses: hmarr/debug-action@v3.0.0
 
       - name: Debug echo
         if: ${{ inputs.debug }}
@@ -45,14 +45,14 @@ jobs:
         run: "echo 'Debug echo'"
 
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Lint Commit Messages
-        uses: wagoid/commitlint-github-action@v5.4.1
+        uses: wagoid/commitlint-github-action@v6.0.2
         with:
-          configFile: commitlint.config.js
+          configFile: commitlint.config.mjs
           helpURL: https://www.conventionalcommits.org
 
   test:
@@ -62,18 +62,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: init jvm
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'liberica'
           java-version: '17'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{ inputs.cache-read-only }}
 
@@ -82,7 +82,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: ${{ inputs.upload-coverage }}
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: target/site/jacoco/jacoco.xml
