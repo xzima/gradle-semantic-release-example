@@ -1,7 +1,7 @@
 ---
 name: 🐞 Bug Report
 about: Найденные ошибки
-title: "bug: "
+title: "fix: "
 labels: "bug"
 assignees: ""
 ---
