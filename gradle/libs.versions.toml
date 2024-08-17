@@ -1,6 +1,6 @@
 [versions]
 jvm = "17"
-kotlin = "1.9.25"
+kotlin = "2.0.10"
 spring-boot = "3.3.2"
 spring-dependency = "1.1.6"
 git-version = "3.1.0"
