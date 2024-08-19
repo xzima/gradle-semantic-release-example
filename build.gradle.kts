@@ -1,8 +1,10 @@
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
+import org.gradle.jvm.toolchain.internal.DefaultJavaLanguageVersion
 import org.springframework.boot.buildpack.platform.docker.type.ImageName
 import org.springframework.boot.buildpack.platform.docker.type.ImageReference
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+import java.util.*
 
 plugins {
     alias(libs.plugins.spring.boot)
@@ -13,8 +15,10 @@ plugins {
 }
 
 val versionDetails: Closure<VersionDetails> by extra
-version = project.version.takeIf { Project.DEFAULT_VERSION != it } ?: versionDetails().run {
-    "$branchName.$gitHash" + if (isCleanTag) "" else "+SNAPSHOT"
+version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versionDetails().run {
+    val base = "$branchName.$gitHash".substringAfter("/")
+    if (isCleanTag) return@run base
+    "$base+SNAPSHOT"
 }
 
 group = "com.github.xzima"
@@ -31,8 +35,13 @@ dependencies {
 
 kotlin {
     jvmToolchain {
-        vendor.set(JvmVendorSpec.BELLSOFT)
-        languageVersion.set(JavaLanguageVersion.of(libs.versions.jvm.get()))
+        val sdkProps = file(".sdkmanrc").reader().use {
+            Properties().apply { load(it) }
+        }
+        val sdkDistribution = sdkProps["java"]?.toString()
+            ?: throw RuntimeException("jdk not present in .sdkmanrc")
+
+        languageVersion.set(DefaultJavaLanguageVersion.fromFullVersion(sdkDistribution))
     }
 }
 
@@ -51,8 +60,6 @@ tasks.register<Test>("genDocs") {
 
 
 tasks.bootBuildImage {
-    builder.set("paketobuildpacks/builder-jammy-base") // https://github.com/paketo-buildpacks/base-builder
-
     customizeBootBuildImage(this)
 }
 
