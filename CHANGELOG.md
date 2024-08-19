@@ -1,3 +1,13 @@
+## [1.2.0](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.5...1.2.0) (2024-08-19)
+
+### ⭐ New Features
+
+* centralize jvm configuration ([#57](https://github.com/xzima/gradle-semantic-release-example/issues/57)) ([1a7bd57](https://github.com/xzima/gradle-semantic-release-example/commit/1a7bd572a14de7a2d4c1a0f753277cb210c0023e))
+
+### 🐞 Bug Fixes
+
+* specify version for artifact in publish-docker-image.yml ([d8d2d27](https://github.com/xzima/gradle-semantic-release-example/commit/d8d2d279ccb40b1871db93609e43b47bc70e7f85))
+
 ## [1.1.5](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.4...1.1.5) (2024-08-17)
 
 ### 🔨 Build System
