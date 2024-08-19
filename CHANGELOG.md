@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.2.0...1.2.1) (2024-08-19)
+
+### 🐞 Bug Fixes
+
+* warning on gradle build ([#61](https://github.com/xzima/gradle-semantic-release-example/issues/61)) ([514b228](https://github.com/xzima/gradle-semantic-release-example/commit/514b228451eb74fee375146a34c1a778e532266b)), closes [#58](https://github.com/xzima/gradle-semantic-release-example/issues/58)
+
 ## [1.2.0](https://github.com/xzima/gradle-semantic-release-example/compare/1.1.5...1.2.0) (2024-08-19)
 
 ### ⭐ New Features
