@@ -16,7 +16,9 @@ plugins {
 
 val versionDetails: Closure<VersionDetails> by extra
 version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versionDetails().run {
-    "$branchName.$gitHash" + if (isCleanTag) "" else "+SNAPSHOT"
+    val base = "$branchName.$gitHash".substringAfter("/")
+    if (isCleanTag) return@run base
+    "$base+SNAPSHOT"
 }
 
 group = "com.github.xzima"
