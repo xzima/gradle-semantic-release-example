@@ -32,10 +32,8 @@ jobs:
           fetch-depth: 0
 
       - name: init jvm
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'liberica'
-          java-version: '17'
+        uses: sdkman/sdkman-action@main
+      - run: source $HOME/.sdkman/bin/sdkman-init.sh && echo "JAVA_HOME=$SDKMAN_DIR/candidates/java/current" >> $GITHUB_ENV
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4

@@ -10,11 +10,11 @@
 <summary>Table of Contents</summary>
 
 - [About](#about)
-  - [Built With](#built-with)
+    - [Built With](#built-with)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Development](#development)
-  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Development](#development)
+    - [Installation](#installation)
 - [Applied practices](#applied-practices)
 - [Security](#security)
 - [License](#license)
@@ -36,14 +36,15 @@ JVM Kotlin Gradle
 
 ### Prerequisites
 
-- [node.js/npm](https://nodejs.org/en/download)
+- [nvm](https://github.com/nvm-sh/nvm)
 - [docker](https://docs.docker.com/engine/install)
-- [jvm](https://adoptium.net/temurin/releases)
-- [gradle](https://gradle.org/install/)
+- [sdkman](https://sdkman.io/install)
 
 ### Development
 
 ```shell
+nvm use # need for configure nodejs
+sdk env # need for configure jvm
 npm i # need for install git hooks
 ```
 
@@ -81,7 +82,7 @@ TODO
 используется [husky]+[commitlint], а на уровне
 CI [wagoid/commitlint-github-action].
 
-Конфигурация commitlint находится в [commitlint.config.js](commitlint.config.js).
+Конфигурация commitlint находится в [commitlint.config.js](commitlint.config.mjs).
 
 ### Automated dependency updates
 
@@ -110,9 +111,10 @@ CI [wagoid/commitlint-github-action].
 
 Тестирование в контексте CI происходит следующим образом:
 
-- задача на тестирование запускается для pull на ветках develop, master, rc и на pull request для остальных веток
-- перед запуском тестов выполняется [actions/setup-java] - установка jdk и [gradle/gradle-build-action] - более
-  продуктивное кеширование зависимостей
+- задача на тестирование запускается для PR и перед сборкой артефакта
+- перед запуском тестов выполняется:
+    - [sdkman/sdkman-action] - установка jdk
+    - [gradle/actions/setup-gradle] - установка gradle wrapper и кеширование зависимостей
 - выполняется `./gradlew build`, которые включает в себя тесты
 - далее запускается [EnricoMi/publish-unit-test-result-action] - публикация результатов выполнения тестов в github
   actions и pull request
@@ -123,7 +125,7 @@ CI [wagoid/commitlint-github-action].
 Конфигурационный файл для [semantic-release] находится в [release.config.js](release.config.js) и содержит следующие
 плагины:
 
-- semantic-release/commit-analyzer - определяет соответствие скоупов [Conventional Commits] с уровнем публикуемого
+- semantic-release/commit-analyzer - определяет соответствие [Conventional Commits] scopes с уровнем публикуемого
   релиза.
 - semantic-release/release-notes-generator - генерирует release notes на основе [Conventional Commits]
 - semantic-release/github - публикует релиз в github и комментирует pull request и issues связанные с релизом
@@ -133,10 +135,10 @@ CI [wagoid/commitlint-github-action].
 - semantic-release/git - выполняет фиксацию изменений в репозитории в процессе выполнения выкатки релиза. Включает
   изменения [CHANGELOG.md](CHANGELOG.md).
 
-Для поддержки [semantic version] на уровне gradle используется плагин [jgitver] и библиотека [kotlin-semver].
-Так как [jgitver] рассчитана на работу с аннотированными тегами, а [semantic-release] - нет, то для правильного
-взаимодействия [build.gradle.kts](build.gradle.kts) был кастомизирован в области расчета версии с использованием
-библиотеки [kotlin-semver].
+Для поддержки [semantic version] на уровне gradle используется плагин [git-version].
+Для сборки рабочей версии артефакта следует `github action` указывает параметр `-Pversion`.
+Для сборок не предназначенных для публикации или не являющихся стабильными [git-version] рассчитывает версию на основе
+ветки и hash-commit. В случае если имеется незафиксированные изменения, то добавляется суффикс `+SNAPSHOT`.
 
 ## Docker hub publication
 
@@ -186,9 +188,9 @@ See [LICENSE](LICENSE) for more information.
 
 [gitflow-action]:https://github.com/Logerfo/gitflow-action
 
-[actions/setup-java]:https://github.com/actions/setup-java
+[sdkman/sdkman-action]:https://github.com/sdkman/sdkman-action
 
-[gradle/gradle-build-action]:https://github.com/gradle/gradle-build-action
+[gradle/actions/setup-gradle]:https://github.com/gradle/actions/blob/main/docs/setup-gradle.md
 
 [EnricoMi/publish-unit-test-result-action]:https://github.com/EnricoMi/publish-unit-test-result-action
 
@@ -196,7 +198,7 @@ See [LICENSE](LICENSE) for more information.
 
 [semantic-release]:https://github.com/semantic-release/semantic-release
 
-[jgitver]:https://github.com/jgitver/gradle-jgitver-plugin
+[git-version]:https://github.com/palantir/gradle-git-version
 
 [kotlin-semver]:https://github.com/z4kn4fein/kotlin-semver
 

@@ -30,10 +30,8 @@ jobs:
           persist-credentials: true
 
       - name: init jvm
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'liberica'
-          java-version: '17'
+        uses: sdkman/sdkman-action@main
+      - run: source $HOME/.sdkman/bin/sdkman-init.sh && echo "JAVA_HOME=$SDKMAN_DIR/candidates/java/current" >> $GITHUB_ENV
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -43,7 +41,7 @@ jobs:
       - name: init npm
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install dependencies
