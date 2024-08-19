@@ -68,6 +68,7 @@ jobs:
 
       - name: init jvm
         uses: sdkman/sdkman-action@main
+      - run: source $HOME/.sdkman/bin/sdkman-init.sh && echo "JAVA_HOME=$SDKMAN_DIR/candidates/java/current" >> $GITHUB_ENV
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
