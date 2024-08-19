@@ -43,6 +43,7 @@ jobs:
       - name: Build & Publish Docker Image
         run: |-
           ./gradlew bootBuildImage \
+              -Pversion=${DOCKER_IMAGE_VERSION} \
               -PimageName=docker.io/${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} \
               -PwithLatest \
               -PdockerHubUsername=${DOCKER_HUB_USERNAME} \
