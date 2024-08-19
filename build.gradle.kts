@@ -43,10 +43,8 @@ kotlin {
 
         languageVersion.set(DefaultJavaLanguageVersion.fromFullVersion(sdkDistribution))
     }
-}
 
-tasks.compileKotlin {
-    kotlinOptions {
+    compilerOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
     }
 }
