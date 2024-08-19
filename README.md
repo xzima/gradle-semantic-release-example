@@ -136,9 +136,9 @@ CI [wagoid/commitlint-github-action].
   изменения [CHANGELOG.md](CHANGELOG.md).
 
 Для поддержки [semantic version] на уровне gradle используется плагин [git-version].
-Так как [git-version] рассчитана на работу с аннотированными тегами, а [semantic-release] - нет, то для правильного
-взаимодействия [build.gradle.kts](build.gradle.kts) был кастомизирован в области расчета версии с использованием
-библиотеки [kotlin-semver].
+Для сборки рабочей версии артефакта следует `github action` указывает параметр `-Pversion`.
+Для сборок не предназначенных для публикации или не являющихся стабильными [git-version] рассчитывает версию на основе
+ветки и hash-commit. В случае если имеется незафиксированные изменения, то добавляется суффикс `+SNAPSHOT`.
 
 ## Docker hub publication
 
