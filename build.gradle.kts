@@ -1,3 +1,15 @@
+import com.github.vlsi.gradle.dsl.configureEach
+import com.github.vlsi.gradle.license.GatherLicenseTask
+import com.github.vlsi.gradle.license.VerifyLicenseCompatibilityTask
+import com.github.vlsi.gradle.license.api.SimpleLicense
+import com.github.vlsi.gradle.license.api.SpdxLicense
+import com.github.vlsi.gradle.license.api.SpdxLicenseException
+import com.github.vlsi.gradle.properties.dsl.props
+import com.github.vlsi.gradle.release.Apache2LicenseRenderer
+import com.github.vlsi.gradle.release.ArtifactType
+import com.github.vlsi.gradle.release.AsfLicenseCategory
+import com.github.vlsi.gradle.release.dsl.dependencyLicenses
+import com.github.vlsi.gradle.release.dsl.licensesCopySpec
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
 import org.gradle.jvm.toolchain.internal.DefaultJavaLanguageVersion
@@ -13,6 +25,9 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.git.version)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.vlsi.extensions)
+    alias(libs.plugins.vlsi.license)
+    alias(libs.plugins.vlsi.release) apply false
 }
 
 val versionDetails: Closure<VersionDetails> by extra
@@ -23,6 +38,7 @@ version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versio
 }
 
 group = "com.github.xzima"
+val author = "Alex Zima"
 
 repositories {
     mavenCentral()
@@ -37,12 +53,11 @@ dependencies {
 spotless {
     ratchetFrom = "origin/master"
     val yearPlaceholder = "\$YEAR"
-    val authorPlaceholder = "Alex Zima"
     kotlin {
         licenseHeader(
             """
             /**
-             * Copyright $yearPlaceholder $authorPlaceholder
+             * Copyright $yearPlaceholder $author
              *
              * Licensed under the Apache License, Version 2.0 (the "License");
              * you may not use this file except in compliance with the License.
@@ -60,6 +75,7 @@ spotless {
         )
     }
 }
+
 kotlin {
     jvmToolchain {
         val sdkProps = file(".sdkmanrc").reader().use {
@@ -80,7 +96,7 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.register<Test>("genDocs") {
+val genDocs by tasks.registering(Test::class) {
 }
 
 
@@ -89,20 +105,20 @@ tasks.bootBuildImage {
 }
 
 fun customizeBootBuildImage(task: BootBuildImage) {
-    val imageName: String? by project
-    if (imageName.isNullOrBlank()) return
+    val imageName by project.props.string
+    if (imageName.isBlank()) return
     // Configure image name with version tag
     val imageReference = ImageReference.of(imageName)
     task.imageName.set(imageReference.toString())
     // Add latest tag
-    val withLatest: String? by project
-    if (null != withLatest) {
+    val withLatest by project.props.bool
+    if (withLatest) {
         task.tags.set(listOf(ImageReference.of(ImageName.of(imageReference.name), "latest").toString()))
     }
     // Configure docker publish
-    val dockerHubUsername: String? by project
-    val dockerHubPassword: String? by project
-    if (dockerHubUsername.isNullOrBlank() || dockerHubPassword.isNullOrBlank()) return
+    val dockerHubUsername by project.props.string
+    val dockerHubPassword by project.props.string
+    if (dockerHubUsername.isBlank() || dockerHubPassword.isBlank()) return
     task.apply {
         publish.set(true)
         docker {
@@ -111,5 +127,75 @@ fun customizeBootBuildImage(task: BootBuildImage) {
                 password.set(dockerHubPassword)
             }
         }
+    }
+}
+
+val gatherLicense by tasks.registering(GatherLicenseTask::class) {
+    // используем зависимости runtimeClasspath
+    configuration(project.configurations.runtimeClasspath)
+
+    // игнорируем отсутствие файла лицензии для следующих лицензий
+    ignoreMissingLicenseFor.addAll(
+        SpdxLicense.EPL_1_0 or SpdxLicense.LGPL_3_0_only,
+    )
+
+    // уточняем лецензии для следующих зависимостей
+    overrideLicense("jakarta.annotation:jakarta.annotation-api") {
+        expectedLicense = SpdxLicense.EPL_2_0 and SimpleLicense(
+            "GPL2 w/ CPE",
+            uri("https://www.gnu.org/software/classpath/license.html")
+        )
+        val gpl2WithCpEx = SpdxLicense.GPL_2_0_only with SpdxLicenseException.Classpath_exception_2_0
+        effectiveLicense = SpdxLicense.EPL_2_0 and gpl2WithCpEx
+    }
+    overrideLicense("ch.qos.logback:logback-classic") {
+        // https://github.com/qos-ch/logback/blob/master/LICENSE.txt
+        expectedLicense = SpdxLicense.EPL_1_0 and SpdxLicense.LGPL_3_0_only
+        effectiveLicense = SpdxLicense.EPL_1_0 or SpdxLicense.LGPL_3_0_only
+    }
+    overrideLicense("ch.qos.logback:logback-core") {
+        // https://github.com/qos-ch/logback/blob/master/LICENSE.txt
+        expectedLicense = SpdxLicense.EPL_1_0 and SpdxLicense.LGPL_3_0_only
+        effectiveLicense = SpdxLicense.EPL_1_0 or SpdxLicense.LGPL_3_0_only
+    }
+}
+
+val verifyLicenses by tasks.registering(VerifyLicenseCompatibilityTask::class) {
+    metadata.from(gatherLicense) // берем метаданные из задачи gatherLicense
+
+    // Правила для проверки лецензий зависимостей
+    allow(SpdxLicense.EPL_2_0) {
+        because("EPL-2.0 is fine in our projects")
+    }
+    // License category
+    // See https://www.apache.org/legal/resolved.html
+    allow(AsfLicenseCategory.A) {
+        because("The ASF category A is allowed")
+    }
+    reject(AsfLicenseCategory.X) {
+        because("The ASF category X is forbidden")
+    }
+}
+
+val renderLicense by tasks.registering(Apache2LicenseRenderer::class) {
+    dependsOn(verifyLicenses) // проверка должна вызываться до генерации
+    metadata.from(gatherLicense) // берем метаданные из задачи gatherLicense
+    artifactType.set(ArtifactType.BINARY) // влияет на перечень допустимых лицензий
+    mainLicenseFile.set(file("LICENSE")) // базовый файл лицензии, который будет расширяться
+}
+
+val renderLicenseCopySpec = licensesCopySpec(renderLicense)
+
+tasks.configureEach<Jar> {
+    manifest {
+        // see default in org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport
+        // attributes["Implementation-Title"] = "PostgreSQL JDBC Driver"
+        // attributes["Implementation-Version"] = project.version
+        // attributes["Bundle-Copyright"] = "Copyright (c) 2003-2020, $author"
+        attributes["Bundle-License"] = SpdxLicense.Apache_2_0.id
+        attributes["Implementation-Vendor"] = author
+    }
+    into("META-INF") {
+        dependencyLicenses(renderLicenseCopySpec)
     }
 }

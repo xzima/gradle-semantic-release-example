@@ -4,6 +4,7 @@ spring-boot = "3.3.2"
 spring-dependency = "1.1.6"
 git-version = "3.1.0"
 spotless = "6.25.0"
+vlsi = "1.90"
 
 [libraries]
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
@@ -24,3 +25,6 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 git-version = { id = "com.palantir.git-version", version.ref = "git-version" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+vlsi-extensions = { id = "com.github.vlsi.gradle-extensions", version.ref = "vlsi" }
+vlsi-license = { id = "com.github.vlsi.license-gather", version.ref = "vlsi" }
+vlsi-release = { id = "com.github.vlsi.stage-vote-release", version.ref = "vlsi" }
