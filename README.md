@@ -194,6 +194,7 @@ gradle-plugin [spotless](https://github.com/diffplug/spotless/tree/main/plugin-g
     - добавляет расширенный файл лицензии и файлы лицензий зависимостей в jar-артефакт(licenseFiles)
 
 Для того чтобы в jar-артефакт добавлялись файлы лицензий так-же необходимо в Jar-тасках прописать логику копирования:
+
 ```kotlin
 tasks.configureEach<Jar> {
     // ...
@@ -205,8 +206,15 @@ tasks.configureEach<Jar> {
 
 ### Указание лицензии в docker-артефакте
 
-https://github.com/paketo-buildpacks/image-labels
-https://docs.docker.com/reference/dockerfile/#maintainer-deprecated
+Для указания лицензии и прочих атрибутов в docker-образе будет
+использоваться [OCI-specified labels](https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys).
+
+Так как Spring Boot Gradle Plugin по умолчанию для сборки docker-image через [Paketo Buildpacks](https://paketo.io/)
+использует сборщик [paketobuildpacks/builder-jammy-base](https://github.com/paketo-buildpacks/builder-jammy-base),
+который в свою очередь использует [paketo-buildpacks/java](https://github.com/paketo-buildpacks/java),
+который в свою очередь использует [paketo-buildpacks/image-labels](https://github.com/paketo-buildpacks/image-labels),
+то для того чтобы указать необходимые labels достаточно в переменные окружения добавить значения описанные в
+документации к последнему сборщику.
 
 ### Создание Dependencies Licence Report
 

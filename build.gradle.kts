@@ -38,7 +38,10 @@ version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versio
 }
 
 group = "com.github.xzima"
+description = "An example project that is automatically deployed"
 val author = "Alex Zima"
+val license = SpdxLicense.Apache_2_0.id
+val scm = "https://github.com/xzima/gradle-semantic-release-example"
 
 repositories {
     mavenCentral()
@@ -102,22 +105,39 @@ val genDocs by tasks.registering(Test::class) {
 
 tasks.bootBuildImage {
     customizeBootBuildImage(this)
+
+    this.environment.putAll(
+        mapOf(
+//            "BP_OCI_AUTHORS" to "",
+//            "BP_OCI_CREATED" to "",
+            "BP_OCI_URL" to scm,
+//            "BP_OCI_SOURCE" to "",
+//            "BP_OCI_DOCUMENTATION" to "",
+            "BP_OCI_VERSION" to project.version.toString(),
+//            "BP_OCI_REVISION" to "",
+            "BP_OCI_VENDOR" to author,
+            "BP_OCI_LICENSES" to license,
+//            "BP_OCI_REF_NAME" to "",
+            "BP_OCI_TITLE" to project.name,
+            "BP_OCI_DESCRIPTION" to project.description,
+        )
+    )
 }
 
 fun customizeBootBuildImage(task: BootBuildImage) {
-    val imageName by project.props.string
+    val imageName by project.props("")
     if (imageName.isBlank()) return
     // Configure image name with version tag
     val imageReference = ImageReference.of(imageName)
     task.imageName.set(imageReference.toString())
     // Add latest tag
-    val withLatest by project.props.bool
+    val withLatest by project.props()
     if (withLatest) {
         task.tags.set(listOf(ImageReference.of(ImageName.of(imageReference.name), "latest").toString()))
     }
     // Configure docker publish
-    val dockerHubUsername by project.props.string
-    val dockerHubPassword by project.props.string
+    val dockerHubUsername by project.props("")
+    val dockerHubPassword by project.props("")
     if (dockerHubUsername.isBlank() || dockerHubPassword.isBlank()) return
     task.apply {
         publish.set(true)
@@ -189,10 +209,9 @@ val renderLicenseCopySpec = licensesCopySpec(renderLicense)
 tasks.configureEach<Jar> {
     manifest {
         // see default in org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport
-        // attributes["Implementation-Title"] = "PostgreSQL JDBC Driver"
+        // attributes["Implementation-Title"] = name
         // attributes["Implementation-Version"] = project.version
-        // attributes["Bundle-Copyright"] = "Copyright (c) 2003-2020, $author"
-        attributes["Bundle-License"] = SpdxLicense.Apache_2_0.id
+        attributes["Bundle-License"] = license
         attributes["Implementation-Vendor"] = author
     }
     into("META-INF") {
