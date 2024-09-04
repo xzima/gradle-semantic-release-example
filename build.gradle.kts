@@ -12,6 +12,7 @@ import com.github.vlsi.gradle.release.dsl.dependencyLicenses
 import com.github.vlsi.gradle.release.dsl.licensesCopySpec
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
+import nebula.plugin.contacts.Contact
 import org.gradle.jvm.toolchain.internal.DefaultJavaLanguageVersion
 import org.springframework.boot.buildpack.platform.docker.type.ImageName
 import org.springframework.boot.buildpack.platform.docker.type.ImageReference
@@ -28,6 +29,13 @@ plugins {
     alias(libs.plugins.vlsi.extensions)
     alias(libs.plugins.vlsi.license)
     alias(libs.plugins.vlsi.release) apply false
+    alias(libs.plugins.nebula.info.broker)
+    alias(libs.plugins.nebula.info.basic)
+    alias(libs.plugins.nebula.info.java)
+    alias(libs.plugins.nebula.info.ci)
+    alias(libs.plugins.nebula.info.scm)
+    alias(libs.plugins.nebula.info.jar)
+    alias(libs.plugins.nebula.contacts)
 }
 
 val versionDetails: Closure<VersionDetails> by extra
@@ -39,9 +47,12 @@ version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versio
 
 group = "com.github.xzima"
 description = "An example project that is automatically deployed"
-val author = "Alex Zima"
+val author = Contact("xzima@ro.ru").apply {
+    moniker = "Alex Zima"
+    github = "https://github.com/xzima"
+    roles("owner", "notify")
+}
 val license = SpdxLicense.Apache_2_0.id
-val scm = "https://github.com/xzima/gradle-semantic-release-example"
 
 repositories {
     mavenCentral()
@@ -95,6 +106,10 @@ kotlin {
     }
 }
 
+contacts {
+    people[author.email] = author
+}
+
 tasks.test {
     useJUnitPlatform()
 }
@@ -108,16 +123,16 @@ tasks.bootBuildImage {
 
     this.environment.putAll(
         mapOf(
-//            "BP_OCI_AUTHORS" to "",
-//            "BP_OCI_CREATED" to "",
-            "BP_OCI_URL" to scm,
-//            "BP_OCI_SOURCE" to "",
-//            "BP_OCI_DOCUMENTATION" to "",
+            // "BP_OCI_AUTHORS" to "",
+            // "BP_OCI_CREATED" to "",
+            "BP_OCI_URL" to scminfo.origin,
+            // "BP_OCI_SOURCE" to "",
+            // "BP_OCI_DOCUMENTATION" to "",
             "BP_OCI_VERSION" to project.version.toString(),
-//            "BP_OCI_REVISION" to "",
-            "BP_OCI_VENDOR" to author,
+            // "BP_OCI_REVISION" to "",
+            "BP_OCI_VENDOR" to author.asString(),
             "BP_OCI_LICENSES" to license,
-//            "BP_OCI_REF_NAME" to "",
+            // "BP_OCI_REF_NAME" to "",
             "BP_OCI_TITLE" to project.name,
             "BP_OCI_DESCRIPTION" to project.description,
         )
@@ -212,9 +227,11 @@ tasks.configureEach<Jar> {
         // attributes["Implementation-Title"] = name
         // attributes["Implementation-Version"] = project.version
         attributes["Bundle-License"] = license
-        attributes["Implementation-Vendor"] = author
+        attributes["Implementation-Vendor"] = author.asString()
     }
     into("META-INF") {
         dependencyLicenses(renderLicenseCopySpec)
     }
 }
+
+fun Contact.asString() = "$moniker($email)"

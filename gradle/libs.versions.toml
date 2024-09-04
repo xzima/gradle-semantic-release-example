@@ -5,6 +5,8 @@ spring-dependency = "1.1.6"
 git-version = "3.1.0"
 spotless = "6.25.0"
 vlsi = "1.90"
+nebula-info = "13.1.2"
+nebula-contacts = "7.0.1"
 
 [libraries]
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
@@ -28,3 +30,10 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 vlsi-extensions = { id = "com.github.vlsi.gradle-extensions", version.ref = "vlsi" }
 vlsi-license = { id = "com.github.vlsi.license-gather", version.ref = "vlsi" }
 vlsi-release = { id = "com.github.vlsi.stage-vote-release", version.ref = "vlsi" }
+nebula-info-broker = { id = "com.netflix.nebula.info-broker", version.ref = "nebula-info" }
+nebula-info-basic = { id = "com.netflix.nebula.info-basic", version.ref = "nebula-info" }
+nebula-info-java = { id = "com.netflix.nebula.info-java", version.ref = "nebula-info" }
+nebula-info-ci = { id = "com.netflix.nebula.info-ci", version.ref = "nebula-info" }
+nebula-info-scm = { id = "com.netflix.nebula.info-scm", version.ref = "nebula-info" }
+nebula-info-jar = { id = "com.netflix.nebula.info-jar", version.ref = "nebula-info" }
+nebula-contacts = { id = "com.netflix.nebula.contacts", version.ref = "nebula-contacts" }

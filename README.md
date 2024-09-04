@@ -182,6 +182,28 @@ gradle-plugin [spotless](https://github.com/diffplug/spotless/tree/main/plugin-g
 - https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Manifest_Specification
 - https://docs.osgi.org/reference/bundle-headers.html
 
+Для объявления контактной информации используется плагин [com.netflix.nebula.contacts](https://github.com/nebula-plugins/gradle-contacts-plugin). Смысл использования в том что он интегрируется с другими плагинами `com.netflix.nebula`.
+
+Для наполнения заголовков jar-манифеста используется набор плагинов [com.netflix.nebula.info](https://github.com/nebula-plugins/gradle-info-plugin):
+ - nebula.info-broker - база для использования всех остальных плагинов
+ - nebula.info-basic - собирает базовую информацию сборки gradle
+ - nebula.info-java - собирает информацию о версиях jvm
+ - nebula.info-ci - собирает информацию сборки ci/cd
+ - nebula.info-scm - собирает информацию git
+ - nebula.info-jar - добавляет собранные атрибуты в jar-манифест
+
+Информация об авторе и лицензии проставляется через добавление следующей логики в Jar-таску:
+
+```kotlin
+tasks.configureEach<Jar> {
+    // ...
+    manifest {
+        attributes["Bundle-License"] = license
+        attributes["Implementation-Vendor"] = author.asString()
+    }
+}
+```
+
 Для агрегации, проверки и указывания лицензий используемых зависимостей, в случае если происходит сборка fat-jar
 используются gradle-плагины:
 
