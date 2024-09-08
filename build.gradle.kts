@@ -61,7 +61,8 @@ repositories {
 dependencies {
     implementation(libs.bundles.implementation)
     developmentOnly(libs.bundles.development)
-    testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.test.implementation)
+    testImplementation(libs.bundles.test.runtime)
 }
 
 spotless {

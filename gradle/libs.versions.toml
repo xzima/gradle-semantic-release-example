@@ -14,11 +14,13 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [bundles]
 implementation = ["spring-boot-starter-web", "jackson-module-kotlin", "kotlin-reflect"]
 development = ["spring-boot-devtools"]
-test = ["spring-boot-starter-test"]
+test-implementation = ["spring-boot-starter-test"]
+test-runtime = ["junit-launcher"]
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
