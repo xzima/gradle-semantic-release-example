@@ -149,13 +149,6 @@ docker hub. Параметр `withLatest` используется для соз
 
 ## Настройка лицензирования в проекте
 
-https://github.com/scm-manager/gradle-license-plugin
-https://github.com/CadixDev/licenser
-https://github.com/hierynomus/license-gradle-plugin
-https://github.com/jk1/Gradle-License-Report
-https://github.com/chrimaeon/gradle-licenses-plugin
-https://github.com/YumiProject/yumi-gradle-licenser
-
 ### Указание лицензии в репозитории
 
 Добавить файл [LICENSE](LICENSE) в корень репозитория.
@@ -237,8 +230,6 @@ tasks.configureEach<Jar> {
 который в свою очередь использует [paketo-buildpacks/image-labels](https://github.com/paketo-buildpacks/image-labels),
 то для того чтобы указать необходимые labels достаточно в переменные окружения добавить значения описанные в
 документации к последнему сборщику.
-
-### Создание Dependencies Licence Report
 
 ## Security
 
