@@ -54,6 +54,17 @@ val author = Contact("xzima@ro.ru").apply {
 }
 val license = SpdxLicense.Apache_2_0.id
 
+configurations {
+    all {
+        resolutionStrategy {
+            failOnVersionConflict()
+            // force(
+            //    "io.grpc:grpc:1.1.1", // because <reason>
+            // )
+        }
+    }
+}
+
 repositories {
     mavenCentral()
 }
