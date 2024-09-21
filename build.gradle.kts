@@ -1,3 +1,20 @@
+/**
+* Copyright 2023-2024 Alex Zima(xzima@ro.ru)
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     https://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+import com.diffplug.gradle.spotless.BaseKotlinExtension
+import com.diffplug.spotless.kotlin.KotlinConstants
 import com.github.vlsi.gradle.dsl.configureEach
 import com.github.vlsi.gradle.license.GatherLicenseTask
 import com.github.vlsi.gradle.license.VerifyLicenseCompatibilityTask
@@ -80,25 +97,10 @@ spotless {
     ratchetFrom = "origin/master"
     val yearPlaceholder = "\$YEAR"
     kotlin {
-        licenseHeader(
-            """
-            /**
-             * Copyright $yearPlaceholder ${author.asString()}
-             *
-             * Licensed under the Apache License, Version 2.0 (the "License");
-             * you may not use this file except in compliance with the License.
-             * You may obtain a copy of the License at
-             *
-             *     https://www.apache.org/licenses/LICENSE-2.0
-             *
-             * Unless required by applicable law or agreed to in writing, software
-             * distributed under the License is distributed on an "AS IS" BASIS,
-             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-             * See the License for the specific language governing permissions and
-             * limitations under the License.
-             */
-            """.trimIndent()
-        )
+        configureSpotlessKotlin(yearPlaceholder)
+    }
+    kotlinGradle {
+        configureSpotlessKotlin(yearPlaceholder)
     }
 }
 
@@ -129,7 +131,6 @@ tasks.test {
 val genDocs by tasks.registering(Test::class) {
 }
 
-
 tasks.bootBuildImage {
     customizeBootBuildImage(this)
 
@@ -147,7 +148,7 @@ tasks.bootBuildImage {
             // "BP_OCI_REF_NAME" to "",
             "BP_OCI_TITLE" to project.name,
             "BP_OCI_DESCRIPTION" to project.description,
-        )
+        ),
     )
 }
 
@@ -186,11 +187,11 @@ val gatherLicense by tasks.registering(GatherLicenseTask::class) {
         SpdxLicense.EPL_1_0 or SpdxLicense.LGPL_3_0_only,
     )
 
-    // уточняем лецензии для следующих зависимостей
+    // уточняем лицензии для следующих зависимостей
     overrideLicense("jakarta.annotation:jakarta.annotation-api") {
         expectedLicense = SpdxLicense.EPL_2_0 and SimpleLicense(
             "GPL2 w/ CPE",
-            uri("https://www.gnu.org/software/classpath/license.html")
+            uri("https://www.gnu.org/software/classpath/license.html"),
         )
         val gpl2WithCpEx = SpdxLicense.GPL_2_0_only with SpdxLicenseException.Classpath_exception_2_0
         effectiveLicense = SpdxLicense.EPL_2_0 and gpl2WithCpEx
@@ -247,3 +248,27 @@ tasks.configureEach<Jar> {
 }
 
 fun Contact.asString() = "$moniker($email)"
+
+fun BaseKotlinExtension.configureSpotlessKotlin(yearPlaceholder: String) {
+    ktlint("1.3.1")
+    licenseHeader(
+        """
+        /**
+        * Copyright $yearPlaceholder ${author.asString()}
+        *
+        * Licensed under the Apache License, Version 2.0 (the "License");
+        * you may not use this file except in compliance with the License.
+        * You may obtain a copy of the License at
+        *
+        *     https://www.apache.org/licenses/LICENSE-2.0
+        *
+        * Unless required by applicable law or agreed to in writing, software
+        * distributed under the License is distributed on an "AS IS" BASIS,
+        * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        * See the License for the specific language governing permissions and
+        * limitations under the License.
+        */
+        """.trimIndent(),
+        KotlinConstants.LICENSE_HEADER_DELIMITER,
+    )
+}
