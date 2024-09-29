@@ -37,6 +37,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import java.util.*
 
 plugins {
+    jacoco
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency)
     alias(libs.plugins.kotlin.jvm)
@@ -126,6 +127,15 @@ contacts {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = false
+    }
 }
 
 val genDocs by tasks.registering(Test::class) {

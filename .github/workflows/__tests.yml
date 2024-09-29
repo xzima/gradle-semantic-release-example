@@ -13,7 +13,7 @@ on:
         default: false
       upload-coverage:
         type: boolean
-        default: false
+        default: true
       upload-test-result:
         type: boolean
         default: true
@@ -81,15 +81,20 @@ jobs:
       - name: Run tests
         run: ./gradlew build
 
-      - name: Upload coverage to Codecov
+      - name: Jacoco Report to PR
         if: ${{ inputs.upload-coverage }}
-        uses: codecov/codecov-action@v4.5.0
+        uses: madrapps/jacoco-report@v1.7.2-beta
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: target/site/jacoco/jacoco.xml
-          env_vars: RUNNER_OS,JAVA_HOME
-          verbose: true
-          fail_ci_if_error: true
+          title: Code Coverage
+          update-comment: true
+          comment-type: both
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
+          paths: "build/reports/jacoco/*/*.xml"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          skip-if-no-changes: true
+          continue-on-error: false
+          debug-mode: ${{ inputs.debug }}
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
