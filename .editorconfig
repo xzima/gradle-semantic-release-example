@@ -1,9 +1,15 @@
+root = true
+
 [*]
+# Кодировка
 charset = utf-8
+# новая строка в конце файлов
+insert_final_newline = true
+# символ переноса строки
 end_of_line = lf
+# Defaults
 indent_size = 4
 indent_style = space
-insert_final_newline = true
 max_line_length = 120
 tab_width = 4
 ij_continuation_indent_size = 8
@@ -11,6 +17,7 @@ ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = true
 ij_smart_tabs = false
+ij_visual_guides = none
 ij_wrap_on_typing = false
 
 [.editorconfig]
@@ -116,6 +123,7 @@ ij_javascript_prefer_explicit_types_function_expression_returns = false
 ij_javascript_prefer_explicit_types_function_returns = false
 ij_javascript_prefer_explicit_types_vars_fields = false
 ij_javascript_prefer_parameters_wrap = false
+ij_javascript_property_prefix = unset
 ij_javascript_reformat_c_style_comments = false
 ij_javascript_space_after_colon = true
 ij_javascript_space_after_comma = true
@@ -200,15 +208,31 @@ ij_javascript_while_brace_force = never
 ij_javascript_while_on_new_line = false
 ij_javascript_wrap_comments = false
 
+# не поддерживает ktLint props 
+# https://youtrack.jetbrains.com/issue/IJPL-30188/EditorConfig-inspections-marks-ktlint-properties-with-The-property-is-not-supported
 [{*.kt,*.kts}]
+# Стандартный code style preset
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+# Должен ли вызов нескольких функций начинаться с новой строки
+ktlint_standard_multiline-expression-wrapping = disabled
+# Допустимость пустых строк в начале тела класса
+ktlint_standard_no-empty-first-line-in-class-body = disabled
+# Запятая после последнего параметра 
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+# Правила для импортов
+ij_kotlin_import_nested_classes = false
+# правила сортировки импортов
+ij_kotlin_imports_layout = *, java.**, javax.**, kotlin.**, ^
+# разрешен wildcard
+ij_kotlin_packages_to_use_import_on_demand = java.util.*, kotlinx.android.synthetic.**, io.ktor.**
+# Defaults
 ij_kotlin_align_in_columns_case_branch = false
 ij_kotlin_align_multiline_binary_operation = false
 ij_kotlin_align_multiline_extends_list = false
 ij_kotlin_align_multiline_method_parentheses = false
 ij_kotlin_align_multiline_parameters = true
 ij_kotlin_align_multiline_parameters_in_calls = false
-ij_kotlin_allow_trailing_comma = true
-ij_kotlin_allow_trailing_comma_on_call_site = true
 ij_kotlin_assignment_wrap = normal
 ij_kotlin_blank_lines_after_class_header = 0
 ij_kotlin_blank_lines_around_block_when_branches = 0
@@ -220,7 +244,6 @@ ij_kotlin_call_parameters_right_paren_on_new_line = true
 ij_kotlin_call_parameters_wrap = on_every_item
 ij_kotlin_catch_on_new_line = false
 ij_kotlin_class_annotation_wrap = split_into_lines
-ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
 ij_kotlin_continuation_indent_for_chained_calls = false
 ij_kotlin_continuation_indent_for_expression_bodies = false
 ij_kotlin_continuation_indent_in_argument_lists = false
@@ -234,8 +257,6 @@ ij_kotlin_extends_list_wrap = normal
 ij_kotlin_field_annotation_wrap = split_into_lines
 ij_kotlin_finally_on_new_line = false
 ij_kotlin_if_rparen_on_new_line = true
-ij_kotlin_import_nested_classes = false
-ij_kotlin_imports_layout = *, java.**, javax.**, kotlin.**, ^
 ij_kotlin_indent_before_arrow_on_new_line = true
 ij_kotlin_insert_whitespaces_in_simple_one_line_method = true
 ij_kotlin_keep_blank_lines_before_right_brace = 2
@@ -256,7 +277,6 @@ ij_kotlin_method_parameters_right_paren_on_new_line = true
 ij_kotlin_method_parameters_wrap = on_every_item
 ij_kotlin_name_count_to_use_star_import = 5
 ij_kotlin_name_count_to_use_star_import_for_members = 3
-ij_kotlin_packages_to_use_import_on_demand = java.util.*, kotlinx.android.synthetic.**, io.ktor.**
 ij_kotlin_parameter_annotation_wrap = off
 ij_kotlin_space_after_comma = true
 ij_kotlin_space_after_extend_colon = true
