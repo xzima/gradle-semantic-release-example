@@ -28,6 +28,9 @@ import com.github.vlsi.gradle.release.AsfLicenseCategory
 import com.github.vlsi.gradle.release.dsl.dependencyLicenses
 import com.github.vlsi.gradle.release.dsl.licensesCopySpec
 import com.palantir.gradle.gitversion.VersionDetails
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.SonatypeHost
 import groovy.lang.Closure
 import nebula.plugin.contacts.Contact
 import org.gradle.jvm.toolchain.internal.DefaultJavaLanguageVersion
@@ -42,6 +45,7 @@ plugins {
     alias(libs.plugins.spring.dependency)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.git.version)
     alias(libs.plugins.spotless)
     alias(libs.plugins.vlsi.extensions)
@@ -54,6 +58,9 @@ plugins {
     alias(libs.plugins.nebula.info.scm)
     alias(libs.plugins.nebula.info.jar)
     alias(libs.plugins.nebula.contacts)
+    alias(libs.plugins.vanniktech.publish)
+    alias(libs.plugins.nebula.maven.manifest)
+    alias(libs.plugins.nebula.maven.scm)
 }
 
 val versionDetails: Closure<VersionDetails> by extra
@@ -70,15 +77,24 @@ val author = Contact("xzima@ro.ru").apply {
     github = "https://github.com/xzima"
     roles("owner", "notify")
 }
-val license = SpdxLicense.Apache_2_0.id
+val license = SpdxLicense.Apache_2_0
+val startYear = 2023
 
 configurations {
+    // fix https://github.com/Kotlin/dokka/issues/3472
+    matching { it.name.startsWith("dokka") }.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group.startsWith("com.fasterxml.jackson")) {
+                useVersion("2.15.3")
+            }
+        }
+    }
     all {
         resolutionStrategy {
             failOnVersionConflict()
-            // force(
-            //    "io.grpc:grpc:1.1.1", // because <reason>
-            // )
+            force(
+                "org.jetbrains:annotations:23.0.0", // because dokka conflict with kotlin
+            )
         }
     }
 }
@@ -91,7 +107,7 @@ dependencies {
     implementation(libs.bundles.implementation)
     developmentOnly(libs.bundles.development)
     testImplementation(libs.bundles.test.implementation)
-    testImplementation(libs.bundles.test.runtime)
+    testRuntimeOnly(libs.bundles.test.runtime)
 }
 
 spotless {
@@ -125,6 +141,29 @@ contacts {
     people[author.email] = author
 }
 
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    configure(
+        KotlinJvm(
+            javadocJar = JavadocJar.Dokka(tasks.dokkaHtml.name),
+            sourcesJar = true,
+        ),
+    )
+    pom {
+        name.set(project.name)
+        description.set(project.description)
+        inceptionYear.set(startYear.toString())
+        url.set(scminfo.origin)
+        licenses {
+            license {
+                name.set(license.title)
+                url.set(license.uri.first().toString())
+                distribution.set("repo")
+            }
+        }
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
@@ -154,7 +193,7 @@ tasks.bootBuildImage {
             "BP_OCI_VERSION" to project.version.toString(),
             // "BP_OCI_REVISION" to "",
             "BP_OCI_VENDOR" to author.asString(),
-            "BP_OCI_LICENSES" to license,
+            "BP_OCI_LICENSES" to license.id,
             // "BP_OCI_REF_NAME" to "",
             "BP_OCI_TITLE" to project.name,
             "BP_OCI_DESCRIPTION" to project.description,
@@ -249,7 +288,7 @@ tasks.configureEach<Jar> {
         // see default in org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport
         // attributes["Implementation-Title"] = name
         // attributes["Implementation-Version"] = project.version
-        attributes["Bundle-License"] = license
+        attributes["Bundle-License"] = license.id
         attributes["Implementation-Vendor"] = author.asString()
     }
     into("META-INF") {
