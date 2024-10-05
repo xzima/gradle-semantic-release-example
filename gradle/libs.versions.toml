@@ -1,8 +1,15 @@
 [versions]
 kotlin = "2.0.10"
+dokka = "1.9.20"
 spring-boot = "3.3.2"
 spring-dependency = "1.1.6"
 git-version = "3.1.0"
+spotless = "6.25.0"
+vlsi = "1.90"
+nebula-info = "13.1.2"
+nebula-contacts = "7.0.1"
+maven-publish = "0.29.0"
+nebula-maven = "21.1.0"
 
 [libraries]
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
@@ -10,15 +17,32 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [bundles]
 implementation = ["spring-boot-starter-web", "jackson-module-kotlin", "kotlin-reflect"]
 development = ["spring-boot-devtools"]
-test = ["spring-boot-starter-test"]
+test-implementation = ["spring-boot-starter-test"]
+test-runtime = ["junit-launcher"]
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 git-version = { id = "com.palantir.git-version", version.ref = "git-version" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+vlsi-extensions = { id = "com.github.vlsi.gradle-extensions", version.ref = "vlsi" }
+vlsi-license = { id = "com.github.vlsi.license-gather", version.ref = "vlsi" }
+vlsi-release = { id = "com.github.vlsi.stage-vote-release", version.ref = "vlsi" }
+nebula-info-broker = { id = "com.netflix.nebula.info-broker", version.ref = "nebula-info" }
+nebula-info-basic = { id = "com.netflix.nebula.info-basic", version.ref = "nebula-info" }
+nebula-info-java = { id = "com.netflix.nebula.info-java", version.ref = "nebula-info" }
+nebula-info-ci = { id = "com.netflix.nebula.info-ci", version.ref = "nebula-info" }
+nebula-info-scm = { id = "com.netflix.nebula.info-scm", version.ref = "nebula-info" }
+nebula-info-jar = { id = "com.netflix.nebula.info-jar", version.ref = "nebula-info" }
+nebula-contacts = { id = "com.netflix.nebula.contacts", version.ref = "nebula-contacts" }
+vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
+nebula-maven-manifest = { id = "com.netflix.nebula.maven-manifest", version.ref = "nebula-maven" }
+nebula-maven-scm = { id = "com.netflix.nebula.maven-scm", version.ref = "nebula-maven" }

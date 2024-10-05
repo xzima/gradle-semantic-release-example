@@ -147,6 +147,90 @@ CI [wagoid/commitlint-github-action].
 На основе параметров `dockerHubUsername` и `dockerHubPassword` определяется имя образа и необходимость его публикации в
 docker hub. Параметр `withLatest` используется для создания/публикации дополнительного тега docker image - latest.
 
+## Настройка лицензирования в проекте
+
+### Указание лицензии в репозитории
+
+Добавить файл [LICENSE](LICENSE) в корень репозитория.
+
+### Указание лицензии в исходных файлах
+
+Для указания лицензий в исходных файлах используется
+gradle-plugin [spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle).
+
+При первоначальном генерировании заголовков следует использовать команду
+`./gradlew spotlessApply -PspotlessSetLicenseHeaderYearsFromGitHistory=true`
+
+Для обновления заголовков следует использовать команду `./gradlew spotlessApply`.
+
+Для проверки заголовков следует использовать команду `./gradlew spotlessCheck`.
+
+### Указание лицензии в jar-артефакте
+
+Для удобства использования параметров в gradle.build используется
+плагин [gradle-extensions-plugin](https://github.com/vlsi/vlsi-release-plugins/blob/master/plugins/gradle-extensions-plugin).
+
+Список стандартных заголовков jar-манифеста представлен в:
+
+- https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Manifest_Specification
+- https://docs.osgi.org/reference/bundle-headers.html
+
+Для объявления контактной информации используется плагин [com.netflix.nebula.contacts](https://github.com/nebula-plugins/gradle-contacts-plugin). Смысл использования в том что он интегрируется с другими плагинами `com.netflix.nebula`.
+
+Для наполнения заголовков jar-манифеста используется набор плагинов [com.netflix.nebula.info](https://github.com/nebula-plugins/gradle-info-plugin):
+ - nebula.info-broker - база для использования всех остальных плагинов
+ - nebula.info-basic - собирает базовую информацию сборки gradle
+ - nebula.info-java - собирает информацию о версиях jvm
+ - nebula.info-ci - собирает информацию сборки ci/cd
+ - nebula.info-scm - собирает информацию git
+ - nebula.info-jar - добавляет собранные атрибуты в jar-манифест
+
+Информация об авторе и лицензии проставляется через добавление следующей логики в Jar-таску:
+
+```kotlin
+tasks.configureEach<Jar> {
+    // ...
+    manifest {
+        attributes["Bundle-License"] = license
+        attributes["Implementation-Vendor"] = author.asString()
+    }
+}
+```
+
+Для агрегации, проверки и указывания лицензий используемых зависимостей, в случае если происходит сборка fat-jar
+используются gradle-плагины:
+
+- [license-gather](https://github.com/vlsi/vlsi-release-plugins/tree/master/plugins/license-gather-plugin)
+    - анализирует лицензии зависимостей(gatherLicense)
+    - проверяет их согласно правилам(verifyLicenses)
+- [stage-vote-release](https://github.com/vlsi/vlsi-release-plugins/tree/master/plugins/stage-vote-release-plugin)
+    - плагин для публикации артефакта. Для сборки fat-jar выключен
+    - генерирует расширенный файл лицензии(renderLicense)
+    - добавляет расширенный файл лицензии и файлы лицензий зависимостей в jar-артефакт(licenseFiles)
+
+Для того чтобы в jar-артефакт добавлялись файлы лицензий так-же необходимо в Jar-тасках прописать логику копирования:
+
+```kotlin
+tasks.configureEach<Jar> {
+    // ...
+    into("META-INF") {
+        dependencyLicenses(licenseFiles)
+    }
+}
+```
+
+### Указание лицензии в docker-артефакте
+
+Для указания лицензии и прочих атрибутов в docker-образе будет
+использоваться [OCI-specified labels](https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys).
+
+Так как Spring Boot Gradle Plugin по умолчанию для сборки docker-image через [Paketo Buildpacks](https://paketo.io/)
+использует сборщик [paketobuildpacks/builder-jammy-base](https://github.com/paketo-buildpacks/builder-jammy-base),
+который в свою очередь использует [paketo-buildpacks/java](https://github.com/paketo-buildpacks/java),
+который в свою очередь использует [paketo-buildpacks/image-labels](https://github.com/paketo-buildpacks/image-labels),
+то для того чтобы указать необходимые labels достаточно в переменные окружения добавить значения описанные в
+документации к последнему сборщику.
+
 ## Security
 
 gradle-semantic-release-example is provided **"as is"** without any **warranty**. Use at your own risk.
