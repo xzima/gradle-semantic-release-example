@@ -7,9 +7,9 @@ on:
       - published
 
 permissions:
-  contents: write
-  issues: read
   checks: write
+  contents: read
+  issues: read
   pull-requests: write
 
 jobs:
@@ -17,8 +17,6 @@ jobs:
     name: Test
     uses: ./.github/workflows/__tests.yml
     secrets: inherit
-    with:
-      run-lint: false
 
   publish:
     needs: [ test ]
