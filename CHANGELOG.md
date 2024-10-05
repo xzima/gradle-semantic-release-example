@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.0...1.3.1) (2024-10-05)
+
+### ⚙️ Continuous Integration
+
+* fix workflow declarations ([204c6eb](https://github.com/xzima/gradle-semantic-release-example/commit/204c6ebbef60348db4e5fcb43546edbaa8b4fb57))
+
 ## [1.3.0](https://github.com/xzima/gradle-semantic-release-example/compare/1.2.1...1.3.0) (2024-10-05)
 
 ### ⭐ New Features
