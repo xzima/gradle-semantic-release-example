@@ -5,9 +5,6 @@ on:
       run-lint:
         type: boolean
         default: true
-      debug:
-        type: boolean
-        default: false
       cache-read-only:
         type: boolean
         default: false
@@ -33,11 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debug action
-        if: ${{ inputs.debug }}
+        if: ${{ runner.debug }}
         uses: hmarr/debug-action@v3.0.0
 
       - name: Debug echo
-        if: ${{ inputs.debug }}
+        if: ${{ runner.debug }}
         env:
           JOB_CONTENT: "${{ toJson(job) }}"
           STEPS_CONTENT: "${{ toJson(steps) }}"
@@ -91,7 +88,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           skip-if-no-changes: true
           continue-on-error: false
-          debug-mode: ${{ inputs.debug }}
+          debug-mode: ${{ runner.debug }}
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2

@@ -18,7 +18,6 @@ jobs:
     secrets: inherit
     with:
       cache-read-only: true
-      debug: true
 
 concurrency:
   # один запуск workflow для каждого pr
