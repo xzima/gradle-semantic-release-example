@@ -1,3 +1,13 @@
+## [1.3.2](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.1...1.3.2) (2024-10-06)
+
+### 🔨 Build System
+
+* change project group from com.github to io.github ([bd7970f](https://github.com/xzima/gradle-semantic-release-example/commit/bd7970f3553b44c136ce2a6c7b17334386cb1dd4))
+
+### ⚙️ Continuous Integration
+
+* fix publish workflows and maven artifact configuration ([2c052b6](https://github.com/xzima/gradle-semantic-release-example/commit/2c052b62230316aeff033cc2d44c4c8c3aa64d06))
+
 ## [1.3.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.0...1.3.1) (2024-10-05)
 
 ### ⚙️ Continuous Integration
