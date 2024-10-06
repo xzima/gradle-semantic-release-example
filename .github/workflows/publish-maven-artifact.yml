@@ -41,6 +41,7 @@ jobs:
       - name: Build & Publish Maven Artifact
         run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
         env:
+          ORG_GRADLE_PROJECT_version: ${{ github.ref_name }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}

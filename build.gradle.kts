@@ -61,6 +61,7 @@ plugins {
     alias(libs.plugins.vanniktech.publish)
     alias(libs.plugins.nebula.maven.manifest)
     alias(libs.plugins.nebula.maven.scm)
+    alias(libs.plugins.nebula.maven.developer)
 }
 
 val versionDetails: Closure<VersionDetails> by extra
