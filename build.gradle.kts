@@ -71,7 +71,7 @@ version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versio
     "$base+SNAPSHOT"
 }
 
-group = "com.github.xzima"
+group = "io.github.xzima"
 description = "An example project that is automatically deployed"
 val author = Contact("xzima@ro.ru").apply {
     moniker = "Alex Zima"
