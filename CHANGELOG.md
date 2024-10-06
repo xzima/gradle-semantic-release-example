@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.2...1.3.3) (2024-10-06)
+
+### 🔨 Build System
+
+* enable artifact singing ([48bc6eb](https://github.com/xzima/gradle-semantic-release-example/commit/48bc6eb1583ebe89da2db72435edb59f056f2e20))
+
 ## [1.3.2](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.1...1.3.2) (2024-10-06)
 
 ### 🔨 Build System
