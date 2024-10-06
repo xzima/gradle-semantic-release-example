@@ -144,6 +144,7 @@ contacts {
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
     configure(
         KotlinJvm(
             javadocJar = JavadocJar.Dokka(tasks.dokkaHtml.name),
