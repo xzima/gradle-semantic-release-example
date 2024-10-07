@@ -1,3 +1,60 @@
+## [1.3.4](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.3...1.3.4) (2024-10-06)
+
+### ⚙️ Continuous Integration
+
+* configure scopes for gradle dependency graph publication ([147e5ec](https://github.com/xzima/gradle-semantic-release-example/commit/147e5ec97b104906c1aec6ea393ea0b02e1b4d69))
+
+## [1.3.3](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.2...1.3.3) (2024-10-06)
+
+### 🔨 Build System
+
+* enable artifact singing ([48bc6eb](https://github.com/xzima/gradle-semantic-release-example/commit/48bc6eb1583ebe89da2db72435edb59f056f2e20))
+
+## [1.3.2](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.1...1.3.2) (2024-10-06)
+
+### 🔨 Build System
+
+* change project group from com.github to io.github ([bd7970f](https://github.com/xzima/gradle-semantic-release-example/commit/bd7970f3553b44c136ce2a6c7b17334386cb1dd4))
+
+### ⚙️ Continuous Integration
+
+* fix publish workflows and maven artifact configuration ([2c052b6](https://github.com/xzima/gradle-semantic-release-example/commit/2c052b62230316aeff033cc2d44c4c8c3aa64d06))
+
+## [1.3.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.0...1.3.1) (2024-10-05)
+
+### ⚙️ Continuous Integration
+
+* fix workflow declarations ([204c6eb](https://github.com/xzima/gradle-semantic-release-example/commit/204c6ebbef60348db4e5fcb43546edbaa8b4fb57))
+
+## [1.3.0](https://github.com/xzima/gradle-semantic-release-example/compare/1.2.1...1.3.0) (2024-10-05)
+
+### ⭐ New Features
+
+* add conflict resolution strategy ([82eb3dc](https://github.com/xzima/gradle-semantic-release-example/commit/82eb3dc36005ab64fd884605f58c7a5a52709cb1))
+* configure code coverage report by jacoco ([d9529f6](https://github.com/xzima/gradle-semantic-release-example/commit/d9529f665bf4f709768eae8291cac4c178895089))
+* configure gradle wrapper validation and dependency graph upload ([8ed963c](https://github.com/xzima/gradle-semantic-release-example/commit/8ed963ca2181de4f172889837f981962ac8f2b03))
+* configure ktlint and editorconfig ([33dff47](https://github.com/xzima/gradle-semantic-release-example/commit/33dff475fc30dae0ca3a7c10914b4798ea1d7a94))
+* configure maven artifact publication ([728cfc2](https://github.com/xzima/gradle-semantic-release-example/commit/728cfc2b5895f524cb21e16c9d86718feaadbfc2))
+* configure spotless linters ([1a66caf](https://github.com/xzima/gradle-semantic-release-example/commit/1a66caf556f869b62f89331539732d4032529dc0))
+
+### 🐞 Bug Fixes
+
+* gradle warning ([08f8e54](https://github.com/xzima/gradle-semantic-release-example/commit/08f8e54018067cb41af0b98dc685db06cfb22936))
+
+### 📔 Documentation
+
+* clear README.md ([a3561e3](https://github.com/xzima/gradle-semantic-release-example/commit/a3561e3a0713968017a58368d351b3c8b4cc1674))
+* configure license in source files ([a9ad2cc](https://github.com/xzima/gradle-semantic-release-example/commit/a9ad2ccace4e8a0ed2fd8e9b51a36d067454e948))
+* configure license propagation to docker-image ([147d635](https://github.com/xzima/gradle-semantic-release-example/commit/147d635e6da42a14570040b03f263f161677ac4f))
+* configure license third party license verification and propagation to jar ([2ae14d4](https://github.com/xzima/gradle-semantic-release-example/commit/2ae14d4ae2bf54f4cd54d3ad078dd88b98b9cea5))
+* optimize jar-manifest attribute calculation with use com.netflix.nebula plugins ([ec5d5ac](https://github.com/xzima/gradle-semantic-release-example/commit/ec5d5acfc40cc63bd8c24ba20844f5b366b9239a))
+
+### ⚙️ Continuous Integration
+
+* add maven artifact publication github workflow ([dbb08f3](https://github.com/xzima/gradle-semantic-release-example/commit/dbb08f33cb6de25afe0376fe065f42608260e5dd))
+* clear debug logic ([5dd33d2](https://github.com/xzima/gradle-semantic-release-example/commit/5dd33d21a9a8f65aae36acfa07e8e02b5eac7709))
+* remove redundant gradle wrapper validation and enable debug mode ([4cb1a52](https://github.com/xzima/gradle-semantic-release-example/commit/4cb1a520007b65c23ae20d7c7b004b08777ea066))
+
 ## [1.2.1](https://github.com/xzima/gradle-semantic-release-example/compare/1.2.0...1.2.1) (2024-08-19)
 
 ### 🐞 Bug Fixes

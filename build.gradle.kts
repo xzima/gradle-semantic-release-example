@@ -61,6 +61,7 @@ plugins {
     alias(libs.plugins.vanniktech.publish)
     alias(libs.plugins.nebula.maven.manifest)
     alias(libs.plugins.nebula.maven.scm)
+    alias(libs.plugins.nebula.maven.developer)
 }
 
 val versionDetails: Closure<VersionDetails> by extra
@@ -70,7 +71,7 @@ version = project.version.takeUnless { Project.DEFAULT_VERSION == it } ?: versio
     "$base+SNAPSHOT"
 }
 
-group = "com.github.xzima"
+group = "io.github.xzima"
 description = "An example project that is automatically deployed"
 val author = Contact("xzima@ro.ru").apply {
     moniker = "Alex Zima"
@@ -143,6 +144,7 @@ contacts {
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
     configure(
         KotlinJvm(
             javadocJar = JavadocJar.Dokka(tasks.dokkaHtml.name),

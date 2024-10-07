@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xzima
+package io.github.xzima
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

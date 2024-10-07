@@ -61,6 +61,8 @@ jobs:
       - name: Generate and submit dependency graph
         if: ${{ 'release' == steps.release.outputs.branch_type }}
         uses: gradle/actions/dependency-submission@v4
+        env:
+          DEPENDENCY_GRAPH_RUNTIME_INCLUDE_CONFIGURATIONS: 'runtimeClasspath'
 
       - name: Do something when a new release published
         run: |

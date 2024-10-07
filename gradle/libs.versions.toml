@@ -46,3 +46,4 @@ nebula-contacts = { id = "com.netflix.nebula.contacts", version.ref = "nebula-co
 vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
 nebula-maven-manifest = { id = "com.netflix.nebula.maven-manifest", version.ref = "nebula-maven" }
 nebula-maven-scm = { id = "com.netflix.nebula.maven-scm", version.ref = "nebula-maven" }
+nebula-maven-developer = { id = "com.netflix.nebula.maven-developer", version.ref = "nebula-maven" }

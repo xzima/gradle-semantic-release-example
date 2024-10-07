@@ -7,8 +7,8 @@ on:
 
 permissions:
   checks: write
-  contents: write
-  issues: write
+  contents: read
+  issues: read
   pull-requests: write
 
 jobs:
@@ -17,7 +17,10 @@ jobs:
     uses: ./.github/workflows/__tests.yml
     secrets: inherit
     with:
+      run-lint: true
       cache-read-only: true
+      upload-test-result: true
+      upload-coverage: true
 
 concurrency:
   # один запуск workflow для каждого pr

@@ -4,23 +4,23 @@ on:
     inputs:
       run-lint:
         type: boolean
-        default: true
+        default: false
       cache-read-only:
         type: boolean
         default: false
       upload-coverage:
         type: boolean
-        default: true
+        default: false
       upload-test-result:
         type: boolean
-        default: true
+        default: false
 
 
 # see https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#permissions
 permissions:
-  issues: read
-  contents: read
   checks: write
+  contents: read
+  issues: read
   pull-requests: write
 
 jobs:

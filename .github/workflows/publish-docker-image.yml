@@ -7,9 +7,9 @@ on:
       - published
 
 permissions:
-  contents: write
-  issues: read
   checks: write
+  contents: read
+  issues: read
   pull-requests: write
 
 jobs:
@@ -17,8 +17,6 @@ jobs:
     name: Test
     uses: ./.github/workflows/__tests.yml
     secrets: inherit
-    with:
-      run-lint: false
 
   publish:
     needs: [ test ]
@@ -41,19 +39,13 @@ jobs:
           cache-read-only: false
 
       - name: Build & Publish Docker Image
-        run: |-
-          ./gradlew bootBuildImage \
-              -Pversion=${DOCKER_IMAGE_VERSION} \
-              -PimageName=docker.io/${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} \
-              -PwithLatest \
-              -PdockerHubUsername=${DOCKER_HUB_USERNAME} \
-              -PdockerHubPassword=${DOCKER_HUB_PASSWORD}
-
+        run: ./gradlew bootBuildImage
         env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
-          DOCKER_IMAGE_VERSION: ${{github.ref_name}}
+          ORG_GRADLE_PROJECT_version: ${{ github.ref_name }}
+          ORG_GRADLE_PROJECT_imageName: docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.ref_name }}
+          ORG_GRADLE_PROJECT_withLatest: true
+          ORG_GRADLE_PROJECT_dockerHubUsername: ${{ secrets.DOCKER_HUB_USERNAME }}
+          ORG_GRADLE_PROJECT_dockerHubPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
 
 concurrency:
