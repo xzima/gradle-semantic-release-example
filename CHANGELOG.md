@@ -1,3 +1,9 @@
+## [1.3.5](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.4...1.3.5) (2024-10-07)
+
+### ⚙️ Continuous Integration
+
+* configure scopes for gradle dependency graph publication ([f499f5d](https://github.com/xzima/gradle-semantic-release-example/commit/f499f5dc4dbcd1d8a737ba21d751adf1dd5b13a5))
+
 ## [1.3.4](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.3...1.3.4) (2024-10-06)
 
 ### ⚙️ Continuous Integration
