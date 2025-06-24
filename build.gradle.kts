@@ -94,7 +94,7 @@ configurations {
         resolutionStrategy {
             failOnVersionConflict()
             force(
-                "org.jetbrains:annotations:23.0.0", // because dokka conflict with kotlin
+                "org.jetbrains:annotations:26.0.2", // because dokka conflict with kotlin
             )
         }
     }
