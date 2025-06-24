@@ -8,7 +8,7 @@ spotless = "7.0.4"
 vlsi = "1.90"
 nebula-info = "14.0.0"
 nebula-contacts = "7.0.2"
-maven-publish = "0.29.0"
+maven-publish = "0.33.0"
 nebula-maven = "21.2.0"
 
 [libraries]
