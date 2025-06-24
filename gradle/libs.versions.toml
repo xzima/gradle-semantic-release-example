@@ -7,7 +7,7 @@ git-version = "3.1.0"
 spotless = "6.25.0"
 vlsi = "1.90"
 nebula-info = "13.1.2"
-nebula-contacts = "7.0.1"
+nebula-contacts = "7.0.2"
 maven-publish = "0.29.0"
 nebula-maven = "21.1.0"
 
