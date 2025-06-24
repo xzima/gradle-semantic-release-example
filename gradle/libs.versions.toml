@@ -9,7 +9,7 @@ vlsi = "1.90"
 nebula-info = "13.1.2"
 nebula-contacts = "7.0.1"
 maven-publish = "0.29.0"
-nebula-maven = "21.1.0"
+nebula-maven = "21.2.0"
 
 [libraries]
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
