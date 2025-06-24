@@ -1,3 +1,9 @@
+## [1.3.6](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.5...1.3.6) (2025-06-24)
+
+### 🔨 Build System
+
+* **config:** migrate config .github/renovate.json ([8bab73b](https://github.com/xzima/gradle-semantic-release-example/commit/8bab73be96b545e5e2d9ad609eb2ed7be857f45a))
+
 ## [1.3.5](https://github.com/xzima/gradle-semantic-release-example/compare/1.3.4...1.3.5) (2024-10-07)
 
 ### ⚙️ Continuous Integration
