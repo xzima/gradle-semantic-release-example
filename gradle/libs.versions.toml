@@ -2,7 +2,7 @@
 kotlin = "2.2.0"
 dokka = "2.0.0"
 spring-boot = "3.5.3"
-spring-dependency = "1.1.6"
+spring-dependency = "1.1.7"
 git-version = "3.3.0"
 spotless = "7.0.4"
 vlsi = "1.90"
