@@ -1,5 +1,5 @@
 /**
- * Copyright 2023-2024 Alex Zima(xzima@ro.ru)
+ * Copyright 2023-2025 Alex Zima(xzima@ro.ru)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import com.github.vlsi.gradle.release.dsl.licensesCopySpec
 import com.palantir.gradle.gitversion.VersionDetails
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
-import com.vanniktech.maven.publish.SonatypeHost
 import groovy.lang.Closure
 import nebula.plugin.contacts.Contact
 import org.gradle.jvm.toolchain.internal.DefaultJavaLanguageVersion
@@ -143,11 +142,11 @@ contacts {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral()
     signAllPublications()
     configure(
         KotlinJvm(
-            javadocJar = JavadocJar.Dokka(tasks.dokkaHtml.name),
+            javadocJar = JavadocJar.Dokka(tasks.dokkaGenerate.name),
             sourcesJar = true,
         ),
     )
@@ -301,7 +300,7 @@ tasks.configureEach<Jar> {
 fun Contact.asString() = "$moniker($email)"
 
 fun BaseKotlinExtension.configureSpotlessKotlin(yearPlaceholder: String) {
-    ktlint("1.3.1")
+    ktlint("1.6.0")
     licenseHeader(
         """
         /**
